@@ -1,0 +1,74 @@
+#Page structure:
+mainpage 
+    login page
+    signup page
+    my lists
+        list a,b,c...
+
+#Stack:
+React - Nodejs - MongoDB
+
+#Modules:
+helmet: security
+bcrypt: passwords
+monk: talk to MongoDB
+cors
+express
+
+#Signup:
+[x] 1. Verify data with requirements
+[x] 2. Check if username is already in use
+    [x] 2b. If user exists, return error
+[x] 3. Hash password
+[x] 4. Insert new user into database
+[x] 5. Authenticate user through token
+
+#Login:
+[x] 1. Verify data with requirements
+[x] 2. Check if username exists
+    [x] 2b. If user does not exist, return error
+[x] 3. Compared hashed passwords
+    [x] 3b. If not match, return error
+[x] 4. Authenticate user through token
+
+#Token distribution
+[x] 1. Collect user info as payload
+[x] 2. Sign token, assign expiration
+[x] 3. Respond with authentication token
+
+#Home Page
+[] 1. Top bar w/ working button routes
+[] 2. Informative landing image + text
+[] 3. LoggedIn state changes
+
+#Signup Page
+[] 1. Create router page
+[] 2. Setup UI layout, utilize material
+[] 3. POST to API /auth/signup
+[] 4. React to response from API. Securely manage incoming token 
+
+#Login Page
+[] 1. Create router page
+[] 2. Setup UI layout, utilize material
+[] 3. POST to API /auth/login
+[] 4. Authenticate user, store token
+[] 5. Redirect to dashboard
+
+#Grocery List Dashboard
+[] 1. Create router page
+[] 2. Setup UI layout (list cards, new list, refresh lists, etc.)
+[] 3. GET to API
+[] 4. React to response
+[] 4. POST ability to API 
+
+#Grocery List Backend
+[] 1. Routes for lists
+[] 2. db Setup
+[] 3. 
+
+#database
+[] 1. Enforce unique usernames
+
+#Left off:
+[x] Joi syntax may be incorrect, figure out how to validate incoming data with schema
+[x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
