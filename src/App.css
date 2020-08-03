@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 
+/*
 :root {
   --primary: #80cbc4;
   --p_light: #b2fef7;
@@ -7,8 +8,9 @@
   --secondary:#90caf9;
   --s_light:#c3fdff;
   --s_dark:#5d99c6;
-  --s_transparent: #90caf950; /* 50 at end is for 50% opacity */
+  --s_transparent: #90caf950;
 }
+*/
 
 html, body {
   height: 100%;

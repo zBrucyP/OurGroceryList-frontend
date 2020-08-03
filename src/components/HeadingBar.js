@@ -7,24 +7,25 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         flexGrow: 1
     },
     appBar: {
-        background: '#80cbc4',
-        color: 'black',
+        background: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText, 
         width: '100%'
     },
     typography: {
         align: 'center',
         color: 'inherit',
         flexGrow: 1  // makes title take up all space between other 2 elmts 
-    }
-})
+    },
+}));
 
 export default function HeadingBar () {
     
