@@ -12,18 +12,66 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Joi from 'joi';
+
+// form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Our Grocery.List
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
+}
+
+// to validate user input
+const schema = Joi.object({
+  email: Joi.string()
+      .email({ tlds: {allow:false} })
+      .trim()
+      .required(),
+  
+  fname: Joi.string()
+      .trim()
+      .min(2)
+      .max(50)
+      .required(),
+
+  password: Joi.string()
+      .trim()
+      .min(8)
+      .max(100)
+      .required(),
+});
+
+// validates user input data before sending to server
+const inputIsValid = (input) => {
+  // ensure passwords match
+  if(input.password.toString() === input.confPass.toString()) { 
+    
+    // validate input with schema
+    const validation = schema.validate({ 
+      fname: input.fname,
+      password: input.password,
+      email: input.email,
+    });
+
+    // no joi errors, user input is valid
+    if(validation.error === undefined) {
+      return true;
+    } 
+    else { // user input is not valid
+      return false;
+    }
+  } 
+  else { // passwords did not match
+    return false;
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +105,37 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const [fname, setFName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+
+  async function submitForm(event) {
+    try {
+      // collect data
+      const formData = {
+        fname: fname,
+        email: email,
+        password: password,
+        confPass: confirmPass
+      };
+  
+      // validate data
+      if(inputIsValid(formData)) {
+        console.log('input was valid');
+      } else{
+        return false;
+      }
+  
+      // send to server
+  
+    } catch (error) {
+      console.log(error);
+    }
+  
+    event.preventDefault();
+  }
+
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
@@ -67,21 +146,25 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={submitForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={fname}
+                onChange={(e) => setFName(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
+                id="fname"
+                label="First Name"
+                name="firstname"
+                autoComplete="fname"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -93,6 +176,8 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -105,6 +190,8 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={confirmPass}
+                onChange={(e) => setConfirmPass(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth

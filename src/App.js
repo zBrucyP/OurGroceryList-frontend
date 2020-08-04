@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
+import { CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette:{
@@ -29,6 +30,7 @@ function App() {
     <div className="App">
       <Router>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <HeadingBar />
           <Switch>
             <Route path="/" exact component={LandingPage} />
