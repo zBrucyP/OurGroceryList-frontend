@@ -2,6 +2,10 @@ import React from 'react';
 import './App.css';
 import HeadingBar from './components/HeadingBar';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import LandingPage from './components/LandingPage';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
 
 const theme = createMuiTheme({
   palette:{
@@ -17,15 +21,22 @@ const theme = createMuiTheme({
       dark: '#5d99c6',
       contrastText: '#000000'
     },
-  }
+  },
 });
 
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <HeadingBar />
-      </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <HeadingBar />
+          <Switch>
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignupPage} />
+          </Switch>
+        </ThemeProvider>  
+      </Router>
     </div>
   );
 }

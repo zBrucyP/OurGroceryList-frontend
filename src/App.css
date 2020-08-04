@@ -19,10 +19,7 @@ html, body {
 
 body {
   background: 
-    linear-gradient(
-      var(--s_transparent),
-      var(--s_transparent)
-    ),
+    linear-gradient(#90caf950,#90caf950),
     url('./img/grocery-shelves-with-food.jpg');
   background-position: center;
   background-repeat: no-repeat;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +22,8 @@ const useStyles = makeStyles(theme => ({
     typography: {
         align: 'center',
         color: 'inherit',
-        flexGrow: 1  // makes title take up all space between other 2 elmts 
+        flexGrow: 1,  // makes title take up all space between other 2 elmts 
+        textDecoration: 'none'
     },
 }));
 
@@ -47,9 +47,11 @@ export default function HeadingBar () {
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h5" className={classes.typography}>Our Grocery.List</Typography>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">Sign up</Button>
+                    <Link className={classes.typography} to="/">
+                        <Typography variant="h5" className={classes.typography}>Our Grocery.List</Typography>
+                    </Link>
+                    <Button color="inherit"><Link to="/login">Login</Link></Button>
+                    <Button color="inherit"><Link to="/signup">Sign up</Link></Button>
                     {loggedIn ? 
                         <Avatar src={userAvatar}/>
                         :
