@@ -111,6 +111,7 @@ export default function SignUp() {
   const [confirmPass, setConfirmPass] = useState('');
 
   async function submitForm(event) {
+    event.preventDefault(); // stop refresh
     try {
       // collect data
       const formData = {
@@ -123,17 +124,29 @@ export default function SignUp() {
       // validate data
       if(inputIsValid(formData)) {
         console.log('input was valid');
+
+        // post to server, get response
+        const res = await fetch('http://localhost:1337/auth/signup/', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+        });
+
+        // get response token (or error) from server
+        const token = await res.json();
+        console.log(token);
+
       } else{
+        console.log('Input not valid');
         return false;
       }
-  
-      // send to server
   
     } catch (error) {
       console.log(error);
     }
-  
-    event.preventDefault();
   }
 
   return (

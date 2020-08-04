@@ -42,10 +42,11 @@ express
 [] 3. LoggedIn state changes
 
 #Signup Page
-[] 1. Create router page
-[] 2. Setup UI layout, utilize material
-[] 3. POST to API /auth/signup
+[X] 1. Create router page
+[X] 2. Setup UI layout, utilize material
+[X] 3. POST to API /auth/signup
 [] 4. React to response from API. Securely manage incoming token 
+[] 5. Visually handle errors
 
 #Login Page
 [] 1. Create router page
