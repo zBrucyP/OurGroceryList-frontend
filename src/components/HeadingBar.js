@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { UserContext } from './UserContext';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,17 +29,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function HeadingBar () {
-    
     const classes = useStyles();
-    const [loggedIn, setLoggedIn] = useState(false);
+
+    const { user, setUser } = useContext(UserContext); // fname, loggedIn
+
     const [userId, setUserId] = useState(null);
-    const [userName, setUserName] = useState(null);
     const [userAvatar, setUserAvatar] = useState(null);
-
-    useEffect ( () => {
-        
-    }, [loggedIn]);
-
 
     return (
         <div className={classes.root}>
@@ -50,9 +46,10 @@ export default function HeadingBar () {
                     <Link className={classes.typography} to="/">
                         <Typography variant="h5" className={classes.typography}>Our Grocery.List</Typography>
                     </Link>
-                    <Button color="inherit"><Link to="/login">Login</Link></Button>
-                    <Button color="inherit"><Link to="/signup">Sign up</Link></Button>
-                    {loggedIn ? 
+                    { user.fname ? <Typography variant="body1" >Hi, { user.fname }!</Typography> : '' }
+                    { user.loggedIn ? '' : <Button color="inherit"><Link to="/login">Login</Link></Button> }
+                    { user.loggedIn ? '' : <Button color="inherit"><Link to="/signup">Sign up</Link></Button> }
+                    { user.loggedIn ? 
                         <Avatar src={userAvatar}/>
                         :
                         <Avatar />

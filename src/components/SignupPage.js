@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,9 +12,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 import Joi from 'joi';
+import Cookies from 'js-cookie';
+import { LinearProgress } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
+import { UserContext } from './UserContext';
 
-// form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
+// base form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
 
 function Copyright() {
   return (
@@ -49,31 +54,6 @@ const schema = Joi.object({
       .required(),
 });
 
-// validates user input data before sending to server
-const inputIsValid = (input) => {
-  // ensure passwords match
-  if(input.password.toString() === input.confPass.toString()) { 
-    
-    // validate input with schema
-    const validation = schema.validate({ 
-      fname: input.fname,
-      password: input.password,
-      email: input.email,
-    });
-
-    // no joi errors, user input is valid
-    if(validation.error === undefined) {
-      return true;
-    } 
-    else { // user input is not valid
-      return false;
-    }
-  } 
-  else { // passwords did not match
-    return false;
-  }
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
@@ -105,52 +85,118 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const { user, setUser} = useContext(UserContext);
+
   const [fname, setFName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [toDashboard, setToDashboard] = useState(false);
+  
+  useEffect(() => { // check for token in cookies
+    let isCancelled = false;
+    if(!isCancelled) {
+      const token_exists = Cookies.get('ogc_token');
+      if(token_exists) {
+        setToDashboard(true);
+      }
+    }
+    return () => isCancelled = true; // fixes Warning: Can't perform a React state update on an unmounted component.
+  }, []);
+
+  // validates user input data before sending to server
+  const inputIsValid = (input) => {
+    // reset error message
+    setErrorMsg('');
+
+    // ensure passwords match
+    if(input.password.toString() === input.confPass.toString()) { 
+      
+      // validate input with schema
+      const validation = schema.validate({ 
+        fname: input.fname,
+        password: input.password,
+        email: input.email,
+      });
+
+      // no joi errors, user input is valid
+      if(validation.error === undefined) {
+        return true;
+      } 
+      else { // user input is not valid
+        setErrorMsg('Input does not match requirements:' + validation.error);
+        return false;
+      }
+    } 
+    else { // passwords did not match
+      setErrorMsg('Passwords do not match');
+      return false;
+    }
+  }
 
   async function submitForm(event) {
     event.preventDefault(); // stop refresh
+    setIsLoading(true); // start loading bar
+    let isCancelled = false; // 
+
     try {
-      // collect data
-      const formData = {
-        fname: fname,
-        email: email,
-        password: password,
-        confPass: confirmPass
-      };
-  
-      // validate data
-      if(inputIsValid(formData)) {
-        console.log('input was valid');
+      if (!isCancelled) {
+        // collect data
+        const formData = {
+          fname: fname,
+          email: email,
+          password: password,
+          confPass: confirmPass
+        };
+    
+        // validate data
+        if(inputIsValid(formData)) {
+          console.log('input was valid');
 
-        // post to server, get response
-        const res = await fetch('http://localhost:1337/auth/signup/', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-        });
+          // post to server, get response
+          const res = await fetch('http://localhost:1337/auth/signup/', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+          });
 
-        // get response token (or error) from server
-        const token = await res.json();
-        console.log(token);
-
-      } else{
-        console.log('Input not valid');
-        return false;
+          if(res.ok) {
+            // get response token from server
+            const data = await res.json();
+            Cookies.set('ogc_token', data.token, { expires: 1 });
+            Cookies.set('userid', data.userid, { expires: 1 });
+            setUser({
+              fname: data.fname,
+              loggedIn: true
+            });
+            setIsLoading(false);
+            setToDashboard(true); // redirect user to dashboard on successful signup
+          } else if (res.status === 409) {
+            setErrorMsg('Email is already in use. Please choose a different one or try logging in.');
+          } else {
+            setErrorMsg('An error occurred. Please check your entries and try again soon.');
+          }
+        } else{
+          console.log('Input not valid');
+          //return false;
+        }
       }
-  
+      return () => isCancelled = true; // fixes Warning: Can't perform a React state update on an unmounted component.
     } catch (error) {
+      setErrorMsg('An unexpected error occurred. Please try again soon.');
       console.log(error);
     }
+    setIsLoading(false);
   }
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
+      {toDashboard ? <Redirect to='/dashboard'/> : ""}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -159,6 +205,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {errorMsg ? <Alert severity="error">{errorMsg}</Alert> : ''}
         <form className={classes.form} noValidate onSubmit={submitForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -243,6 +290,7 @@ export default function SignUp() {
       <Box mt={5}>
         <Copyright />
       </Box>
+      {isLoading ? <LinearProgress color="secondary"/> : ""}
     </Container>
   );
 }

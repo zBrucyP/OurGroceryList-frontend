@@ -45,8 +45,10 @@ express
 [X] 1. Create router page
 [X] 2. Setup UI layout, utilize material
 [X] 3. POST to API /auth/signup
-[] 4. React to response from API. Securely manage incoming token 
-[] 5. Visually handle errors
+[x] 4. React to response from API. Securely manage incoming token 
+[x] 5. Visually handle errors
+[x] 6. Redirect to landing page
+[] 7. Redirect/login if cookie with token already exists
 
 #Login Page
 [] 1. Create router page
@@ -68,8 +70,10 @@ express
 [] 3. 
 
 #database
-[] 1. Enforce unique usernames
+[x] 1. Enforce unique usernames/emails
 
 #Left off:
 [x] Joi syntax may be incorrect, figure out how to validate incoming data with schema
 [x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
+[x] Signup page complete, needs to redirect to landing page on successful signup
+[x] LoggedIn state management -> figure out React context
