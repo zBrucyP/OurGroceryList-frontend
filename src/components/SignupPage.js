@@ -153,7 +153,6 @@ export default function SignUp() {
     
         // validate data
         if(inputIsValid(formData)) {
-          console.log('input was valid');
 
           // post to server, get response
           const res = await fetch('http://localhost:1337/auth/signup/', {
@@ -169,7 +168,8 @@ export default function SignUp() {
             // get response token from server
             const data = await res.json();
             Cookies.set('ogc_token', data.token, { expires: 1 });
-            Cookies.set('userid', data.userid, { expires: 1 });
+            //Cookies.set('fname', data.fname, { expires: 1});
+            //Cookies.set('userid', data.userid, { expires: 1 });
             setUser({
               fname: data.fname,
               loggedIn: true

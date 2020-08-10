@@ -37,9 +37,16 @@ express
 [x] 3. Respond with authentication token
 
 #Home Page
-[] 1. Top bar w/ working button routes
+[x] 1. Top bar w/ working button routes
 [] 2. Informative landing image + text
-[] 3. LoggedIn state changes
+[x] 3. LoggedIn state changes
+
+#App Bar
+[] 1. Opening waffle menu
+[x] 2. Login / Signup button 
+[] 3. Avatar filled with user's pic
+[] 4. Avatar as button for menu
+[] 5. Greeting to user's first name
 
 #Signup Page
 [X] 1. Create router page
@@ -77,3 +84,5 @@ express
 [x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
 [x] Signup page complete, needs to redirect to landing page on successful signup
 [x] LoggedIn state management -> figure out React context
+[] Authentication middleware -> uncomment L24 in index.js. Test middleware
+
