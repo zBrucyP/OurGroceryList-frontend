@@ -6,7 +6,7 @@ mainpage
         list a,b,c...
 
 #Stack:
-React - Nodejs - MongoDB
+React - Nodejs/Express - MongoDB
 
 #Modules:
 helmet: security
@@ -65,11 +65,14 @@ express
 [] 5. Redirect to dashboard
 
 #Grocery List Dashboard
-[] 1. Create router page
-[] 2. Setup UI layout (list cards, new list, refresh lists, etc.)
-[] 3. GET to API
-[] 4. React to response
+[x] 1. Create router page
+[] 2. Setup UI layout with grid and cards
+[] 3. Add list function
 [] 4. POST ability to API 
+[] 3. GET to API for all current lists
+[] 4. Generate grid of all cards
+[] 5. Header link to dashboard
+[] * Handle redirect to login
 
 #Grocery List Backend
 [] 1. Routes for lists
@@ -84,5 +87,6 @@ express
 [x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
 [x] Signup page complete, needs to redirect to landing page on successful signup
 [x] LoggedIn state management -> figure out React context
-[] Authentication middleware -> uncomment L24 in index.js. Test middleware
+[x] Authentication middleware -> uncomment L24 in index.js. Test middleware
+[] useEffect in Dashboard.js for call to API and creation of grid of user's list
 
