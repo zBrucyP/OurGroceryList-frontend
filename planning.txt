@@ -16,77 +16,77 @@ cors
 express
 
 #Signup:
-[x] 1. Verify data with requirements
-[x] 2. Check if username is already in use
-    [x] 2b. If user exists, return error
-[x] 3. Hash password
-[x] 4. Insert new user into database
-[x] 5. Authenticate user through token
+* [x] Verify data with requirements
+* [x] Check if username is already in use
+    * [x] If user exists, return error
+* [x] Hash password
+* [x] Insert new user into database
+* [x] Authenticate user through token
 
 #Login:
-[x] 1. Verify data with requirements
-[x] 2. Check if username exists
-    [x] 2b. If user does not exist, return error
-[x] 3. Compared hashed passwords
-    [x] 3b. If not match, return error
-[x] 4. Authenticate user through token
+* [x] Verify data with requirements
+* [x] Check if username exists
+    * [x] If user does not exist, return error
+*[x] Compared hashed passwords
+    * [x] If not match, return error
+* [x] Authenticate user through token
 
 #Token distribution
-[x] 1. Collect user info as payload
-[x] 2. Sign token, assign expiration
-[x] 3. Respond with authentication token
+* [x] Collect user info as payload
+* [x] Sign token, assign expiration
+* [x] Respond with authentication token
 
 #Home Page
-[x] 1. Top bar w/ working button routes
-[] 2. Informative landing image + text
-[x] 3. LoggedIn state changes
+* [x] Top bar w/ working button routes
+* [] Informative landing image + text
+* [x] LoggedIn state changes
 
 #App Bar
-[] 1. Opening waffle menu
-[x] 2. Login / Signup button 
-[] 3. Avatar filled with user's pic
-[] 4. Avatar as button for menu
-[] 5. Greeting to user's first name
+* []  Opening waffle menu
+* [x] Login / Signup button 
+* [] Avatar filled with user's pic
+* [] Avatar as button for menu
+* [] Greeting to user's first name
 
 #Signup Page
-[X] 1. Create router page
-[X] 2. Setup UI layout, utilize material
-[X] 3. POST to API /auth/signup
-[x] 4. React to response from API. Securely manage incoming token 
-[x] 5. Visually handle errors
-[x] 6. Redirect to landing page
-[] 7. Redirect/login if cookie with token already exists
+* [X] Create router page
+* [X] Setup UI layout, utilize material
+* [X] POST to API /auth/signup
+* [x] React to response from API. Securely manage incoming token 
+* [x] Visually handle errors
+* [x] Redirect to landing page
+* [] Redirect/login if cookie with token already exists
 
 #Login Page
-[] 1. Create router page
-[] 2. Setup UI layout, utilize material
-[] 3. POST to API /auth/login
-[] 4. Authenticate user, store token
-[] 5. Redirect to dashboard
+* [] Create router page
+* [] Setup UI layout, utilize material
+* [] POST to API /auth/login
+* [] Authenticate user, store token
+* [] Redirect to dashboard
 
 #Grocery List Dashboard
-[x] 1. Create router page
-[] 2. Setup UI layout with grid and cards
-[] 3. Add list function
-[] 4. POST ability to API 
-[] 3. GET to API for all current lists
-[] 4. Generate grid of all cards
-[] 5. Header link to dashboard
-[] * Handle redirect to login
+* [x] Create router page
+* [] Setup UI layout with grid and cards
+* [] Add list function
+* [] POST ability to API 
+* [] GET to API for all current lists
+* [] Generate grid of all cards
+* [] Header link to dashboard
+* [] Handle redirect to login
 
 #Grocery List Backend
-[] 1. Routes for lists
-[] 2. db Setup
-[] 3. 
+* [] Routes for lists
+* [] db Setup
+* [] 
 
 #database
-[x] 1. Enforce unique usernames/emails
+* [x] Enforce unique usernames/emails
 
 #Left off:
-[x] Joi syntax may be incorrect, figure out how to validate incoming data with schema
-[x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
-[x] Signup page complete, needs to redirect to landing page on successful signup
-[x] LoggedIn state management -> figure out React context
-[x] Authentication middleware -> uncomment L24 in index.js. Test middleware
-[] useEffect in Dashboard.js for call to API and creation of grid of user's list
+* [x] Joi syntax may be incorrect, figure out how to validate incoming data with schema
+* [x] Signup complete, login almost complete. Write new function to distribute authentication + refresh tokens.
+* [x] Signup page complete, needs to redirect to landing page on successful signup
+* [x] LoggedIn state management -> figure out React context
+* [x] Authentication middleware -> uncomment L24 in index.js. Test middleware
+* [] useEffect in Dashboard.js for call to API and creation of grid of user's list
 
