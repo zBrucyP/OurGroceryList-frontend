@@ -47,6 +47,7 @@ export default function HeadingBar () {
                         <Typography variant="h5" className={classes.typography}>Our Grocery.List</Typography>
                     </Link>
                     { user.fname ? <Typography variant="body1" >Hi, { user.fname }!</Typography> : '' }
+                    { user.loggedIn ? <Button color="inherit"><Link to="/dashboard">Dashboard</Link></Button> : ''}
                     { user.loggedIn ? '' : <Button color="inherit"><Link to="/login">Login</Link></Button> }
                     { user.loggedIn ? '' : <Button color="inherit"><Link to="/signup">Sign up</Link></Button> }
                     { user.loggedIn ? 

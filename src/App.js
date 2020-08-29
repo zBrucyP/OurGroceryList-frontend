@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import Dashboard from './components/Dashboard';
+import ListPage from './components/ListPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/list" component={ListPage} />
             </Switch>
           </UserContext.Provider>
         </ThemeProvider>  

@@ -75,8 +75,8 @@ express
 * [] Handle redirect to login
 
 #Grocery List Backend
-* [] Routes for lists
-* [] db Setup
+* [x] Routes for lists
+* [x] db Setup
 * [] 
 
 #database
@@ -88,5 +88,6 @@ express
 * [x] Signup page complete, needs to redirect to landing page on successful signup
 * [x] LoggedIn state management -> figure out React context
 * [x] Authentication middleware -> uncomment L24 in index.js. Test middleware
-* [] useEffect in Dashboard.js for call to API and creation of grid of user's list
+* [x] useEffect in Dashboard.js for call to API and creation of grid of user's list
+* [] Make cards more modular and visually appealing. Function to click list and see detailed version.
 

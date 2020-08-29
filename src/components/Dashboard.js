@@ -26,7 +26,7 @@ import Joi from 'joi';
 
 const schema = Joi.object({
     name: Joi.string()
-        .min(4)
+        .min(2)
         .max(40)
         .trim()
         .required()
@@ -81,9 +81,14 @@ const useStyles = makeStyles(theme => ({
     icon: {
         align: 'right',
         fontSize: '200%',
+        cursor: 'pointer',
         '&:hover': {
             color: theme.palette.primary.dark,
         }
+    },
+    
+    card: {
+        cursor: 'pointer',
     }
 }));
 
@@ -99,12 +104,14 @@ export default function Dashboard() {
     const [errorMsg, setErrorMsg] = useState('');
     const [lists, setLists] = useState([]);
     const [editMode, setEditMode] = useState(false);
+    const [routeListID, setRouteListID] = useState('');
+    const [toListPage, setToListPage] = useState(false);
 
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
         const cards = lists.map((list, index) =>
-            <Grid item xs>
-                <Card id={list._id} onClick={handleListClick}>
+            <Grid item xs key={index}>
+                <Card className={classes.card} id={list._id} onClick={handleListClick}>
                     <CardContent>
                         {editMode ? <RemoveCircleIcon id={list._id} onClick={handleDeleteList} className={classes.icon}></RemoveCircleIcon> : ""}
                         <Typography className={classes.typography_header} gutterBottom>
@@ -120,8 +127,9 @@ export default function Dashboard() {
         return cards;
     };
 
-    function handleListClick() {
-        // TODO: route to page for single list, include list id in url
+    function handleListClick(event) {
+        setRouteListID(event.currentTarget.id);
+        setToListPage(true);
     }
 
     async function handleDeleteList(event) { 
@@ -151,10 +159,11 @@ export default function Dashboard() {
                 Cookies.remove('ogc_token');
                 setUser(state => ({...state, loggedIn: false}));
             } else {
-                console.log(res);
+                setErrorMsg('Unable to delete list. Please try again.');
             }
         } catch(error) {
             console.log(error);
+            setErrorMsg('An error occurred. Please try again.');
         }
     };
 
@@ -190,7 +199,7 @@ export default function Dashboard() {
                 Cookies.remove('ogc_token');
                 setUser(state => ({...state, loggedIn: false}));
             } else {
-                console.log(res);
+                setErrorMsg('Unable to get current lists');
             }
         } catch(error) {
             console.log(error);
@@ -236,7 +245,7 @@ export default function Dashboard() {
                     Cookies.remove('ogc_token');
                     setUser(state => ({...state, loggedIn: false}));
                 } else {
-                    console.log(res);
+                    setErrorMsg('Unable to add list. Please try again.');
                 }
             } else {
                 setErrorMsg('List name is not acceptable.');
@@ -296,7 +305,8 @@ export default function Dashboard() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            {user.loggedIn ? "" : <Redirect to='/login'/>}
+            { user.loggedIn ? "" : <Redirect to='/login'/> }
+            { toListPage ? <Redirect to={`/list?id=${routeListID}`} /> : "" }
             <div className={classes.dashBoardToolbar}>
                 {isLoading ? <LinearProgress/> : ""}
                 <Typography className={classes.typography_dashboard_header}>Your Lists</Typography>
