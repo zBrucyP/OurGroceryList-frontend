@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,  // makes title take up all space between other 2 elmts 
         textDecoration: 'none'
     },
+    button: {
+        margin: '5px',
+    }
 }));
 
 export default function HeadingBar () {
@@ -47,9 +50,9 @@ export default function HeadingBar () {
                         <Typography variant="h5" className={classes.typography}>Our Grocery.List</Typography>
                     </Link>
                     { user.fname ? <Typography variant="body1" >Hi, { user.fname }!</Typography> : '' }
-                    { user.loggedIn ? <Button color="inherit"><Link to="/dashboard">Dashboard</Link></Button> : ''}
-                    { user.loggedIn ? '' : <Button color="inherit"><Link to="/login">Login</Link></Button> }
-                    { user.loggedIn ? '' : <Button color="inherit"><Link to="/signup">Sign up</Link></Button> }
+                    { user.loggedIn ? <Button className={classes.button} color="inherit"><Link to="/dashboard">Dashboard</Link></Button> : ''}
+                    { user.loggedIn ? '' : <Button className={classes.button} color="inherit"><Link to="/login">Login</Link></Button> }
+                    { user.loggedIn ? '' : <Button className={classes.button} color="inherit"><Link to="/signup">Sign up</Link></Button> }
                     { user.loggedIn ? 
                         <Avatar src={userAvatar}/>
                         :

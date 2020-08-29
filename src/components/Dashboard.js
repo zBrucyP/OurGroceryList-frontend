@@ -135,8 +135,10 @@ export default function Dashboard() {
     async function handleDeleteList(event) { 
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) setUser(state => ({...state, loggedIn: false}));
-
+        if(token === undefined) {
+            Cookies.remove('ogc_token');
+            setUser(state => ({...state, loggedIn: false}));
+        }
         const id_list_to_delete = { 
             list_id: event.currentTarget.id
         }; 
@@ -180,8 +182,10 @@ export default function Dashboard() {
         
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) setUser(state => ({...state, loggedIn: false}));
-        
+        if(token === undefined) {
+            Cookies.remove('ogc_token');
+            setUser(state => ({...state, loggedIn: false}));
+        }
         try {
             const res = await fetch('http://localhost:1337/api/lists/getAll/', {
                 method: 'GET',
@@ -213,8 +217,10 @@ export default function Dashboard() {
 
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) setUser(state => ({...state, loggedIn: false}));
-
+        if(token === undefined) {
+            Cookies.remove('ogc_token');
+            setUser(state => ({...state, loggedIn: false}));
+        }
         try {
             const validation = schema.validate({
                 name: newListName
