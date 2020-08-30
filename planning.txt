@@ -89,5 +89,6 @@ express
 * [x] LoggedIn state management -> figure out React context
 * [x] Authentication middleware -> uncomment L24 in index.js. Test middleware
 * [x] useEffect in Dashboard.js for call to API and creation of grid of user's list
-* [] Make cards more modular and visually appealing. Function to click list and see detailed version.
+* [x] Function to click list and see detailed version.
+* [] List page, query for data
 

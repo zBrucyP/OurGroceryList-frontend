@@ -60,6 +60,7 @@ const useStyles = makeStyles(theme => ({
         align: 'center',
         color: 'inherit',
         textDecoration: 'none',
+        fontSize: '80%',
     },
 
     typography_dashboard_header: {
