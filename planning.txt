@@ -55,24 +55,24 @@ express
 * [x] React to response from API. Securely manage incoming token 
 * [x] Visually handle errors
 * [x] Redirect to landing page
-* [] Redirect/login if cookie with token already exists
+* [x] Redirect/login if cookie with token already exists
 
 #Login Page
-* [] Create router page
-* [] Setup UI layout, utilize material
-* [] POST to API /auth/login
-* [] Authenticate user, store token
-* [] Redirect to dashboard
+* [x] Create router page
+* [x] Setup UI layout, utilize material
+* [x] POST to API /auth/login
+* [x] Authenticate user, store token
+* [x] Redirect to dashboard
 
 #Grocery List Dashboard
 * [x] Create router page
-* [] Setup UI layout with grid and cards
-* [] Add list function
-* [] POST ability to API 
-* [] GET to API for all current lists
-* [] Generate grid of all cards
-* [] Header link to dashboard
-* [] Handle redirect to login
+* [x] Setup UI layout with grid and cards
+* [x] Add list function
+* [x] POST ability to API 
+* [x] GET to API for all current lists
+* [x] Generate grid of all cards
+* [x] Header link to dashboard
+* [x] Handle redirect to login
 
 #Grocery List Backend
 * [x] Routes for lists
@@ -90,5 +90,6 @@ express
 * [x] Authentication middleware -> uncomment L24 in index.js. Test middleware
 * [x] useEffect in Dashboard.js for call to API and creation of grid of user's list
 * [x] Function to click list and see detailed version.
-* [] List page, query for data
+* [x] List page, query for data
+* [] Table on list page with test data -> need to fill with list data
 

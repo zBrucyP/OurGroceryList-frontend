@@ -3,6 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { UserContext } from './UserContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Redirect } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -208,6 +209,7 @@ export default function Dashboard() {
             }
         } catch(error) {
             console.log(error);
+            setErrorMsg('An unknown error occurred. Please try again.');
         }
 
         setIsLoading(false);
@@ -280,6 +282,7 @@ export default function Dashboard() {
 
     return(
         <div className={classes.dashboard}>
+            <CssBaseline />
             {errorMsg? <Alert severity="info">{errorMsg}</Alert> : ""}
             <Dialog open={newListDialogOpen} onClose={handleNewListDialogClose}>
                 <DialogTitle className={classes.typography_header}>New List</DialogTitle>
