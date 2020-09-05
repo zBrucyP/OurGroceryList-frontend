@@ -15,15 +15,15 @@ import { UserContext } from './components/UserContext';
 const theme = createMuiTheme({
   palette:{
     primary: {
-      light: '#b2fef7',
-      main: '#80cbc4',
-      dark: '#4f9a94',
+      light: '#b6ffff',
+      main: '#81d4fa',
+      dark: '#4ba3c7',
       contrastText: '#000000'
     },
     secondary: {
-      light: '#c3fdff',
-      main: '#90caf9',
-      dark: '#5d99c6',
+      light: '#ffd9b1',
+      main: '#faa781',
+      dark: '#c47854',
       contrastText: '#000000'
     },
   },
