@@ -37,15 +37,11 @@ function Copyright() {
 // to validate user input
 const schema = Joi.object({
   email: Joi.string()
-      .email({ tlds: {allow:false} })
-      .trim()
-      .required(),
+    .email({ tlds: { allow: false } })
+    .trim()
+    .required(),
 
-  password: Joi.string()
-      .trim()
-      .min(8)
-      .max(100)
-      .required(),
+  password: Joi.string().trim().min(8).max(100).required(),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -58,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(5),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
-    paddingBottom: theme.spacing(3)
+    paddingBottom: theme.spacing(3),
   },
   container: {
-      background: 'white'
+    background: 'white',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -86,42 +82,43 @@ export default function SignUp() {
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
-  
-  useEffect(() => { // check for token in cookies
+
+  useEffect(() => {
+    // check for token in cookies
     let isCancelled = false;
-    if(!isCancelled) {
+    if (!isCancelled) {
       const token_exists = Cookies.get('ogc_token');
-      if(token_exists) {
+      if (token_exists) {
         setToDashboard(true);
       }
     }
-    return () => isCancelled = true; // fixes Warning: Can't perform a React state update on an unmounted component.
+    return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
   }, []);
 
   // validates user input data before sending to server
   const inputIsValid = (input) => {
     // reset error message
     setErrorMsg('');
-      
+
     // validate input with schema
-    const validation = schema.validate({ 
-        password: input.password,
-        email: input.email,
+    const validation = schema.validate({
+      password: input.password,
+      email: input.email,
     });
 
     // no joi errors, user input is valid
-    if(validation.error === undefined) {
-        return true;
-    } 
-    else { // user input is not valid
-        return false;
-    } 
-  }
+    if (validation.error === undefined) {
+      return true;
+    } else {
+      // user input is not valid
+      return false;
+    }
+  };
 
   async function submitForm(event) {
     event.preventDefault(); // stop refresh
     setIsLoading(true); // start loading bar
-    let isCancelled = false; // 
+    let isCancelled = false; //
 
     try {
       if (!isCancelled) {
@@ -130,41 +127,40 @@ export default function SignUp() {
           email: email,
           password: password,
         };
-    
-        // validate data
-        if(inputIsValid(formData)) {
 
+        // validate data
+        if (inputIsValid(formData)) {
           // post to server, get response
           const res = await fetch('http://localhost:1337/auth/login/', {
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
           });
 
-          if(res.ok) {
+          if (res.ok) {
             // get response token from server
             const data = await res.json();
             Cookies.set('ogc_token', data.token, { expires: 1 });
             //Cookies.set('fname', data.fname, { expires: 1});
             //Cookies.set('userid', data.userid, { expires: 1 });
             setUser({
-                fname: data.fname,
-                loggedIn: true
+              fname: data.fname,
+              loggedIn: true,
             });
             setIsLoading(false);
             setToDashboard(true); // redirect user to dashboard on successful signup
           } else {
-                console.log(res);
-                setErrorMsg('Email or password is incorrect.2');
+            console.log(res);
+            setErrorMsg('Email or password is incorrect.2');
           }
-        } else{
-            setErrorMsg('Email or password is incorrect.3');
+        } else {
+          setErrorMsg('Email or password is incorrect.3');
         }
       }
-      return () => isCancelled = true; // fixes Warning: Can't perform a React state update on an unmounted component.
+      return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
     } catch (error) {
       setErrorMsg('An unexpected error occurred. Please try again soon.');
       console.log(error);
@@ -174,7 +170,7 @@ export default function SignUp() {
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
-      {toDashboard ? <Redirect to='/dashboard'/> : ""}
+      {toDashboard ? <Redirect to="/dashboard" /> : ''}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -235,7 +231,7 @@ export default function SignUp() {
       <Box mt={5}>
         <Copyright />
       </Box>
-      {isLoading ? <LinearProgress color="secondary"/> : ""}
+      {isLoading ? <LinearProgress color="secondary" /> : ''}
     </Container>
   );
 }
