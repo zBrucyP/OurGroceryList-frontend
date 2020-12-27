@@ -24,32 +24,27 @@ import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
 
-
 const schema = Joi.object({
-    name: Joi.string()
-        .min(2)
-        .max(40)
-        .trim()
-        .required()
+    name: Joi.string().min(2).max(40).trim().required(),
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        flexGrow: 1
+        flexGrow: 1,
     },
 
     dashboard: {
         marginTop: '5%',
         marginLeft: '5%',
         marginRight: '5%',
-        background: fade(theme.palette.secondary.light, .5),
+        background: fade(theme.palette.secondary.light, 0.5),
     },
 
     dashBoardToolbar: {
         width: '100%',
         display: 'flex',
-        background: fade(theme.palette.secondary.main, .85),
+        background: fade(theme.palette.secondary.main, 0.85),
     },
 
     grid: {
@@ -69,7 +64,7 @@ const useStyles = makeStyles(theme => ({
         align: 'center',
         color: 'inherit',
         textDecoration: 'none',
-        fontSize: '200%'
+        fontSize: '200%',
     },
 
     typography_header: {
@@ -77,7 +72,7 @@ const useStyles = makeStyles(theme => ({
         align: 'center',
         color: 'inherit',
         textDecoration: 'none',
-        fontSize: '130%'
+        fontSize: '130%',
     },
 
     icon: {
@@ -86,19 +81,18 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         '&:hover': {
             color: theme.palette.primary.dark,
-        }
+        },
     },
-    
+
     card: {
         cursor: 'pointer',
-    }
+    },
 }));
-
 
 export default function Dashboard() {
     const classes = useStyles();
     const { user, setUser } = useContext(UserContext); // fname, loggedIn
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [newListDialogOpen, setNewListDialogOpen] = useState(false);
     const [newListName, setNewListName] = useState('');
@@ -111,12 +105,27 @@ export default function Dashboard() {
 
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
-        const cards = lists.map((list, index) =>
+        const cards = lists.map((list, index) => (
             <Grid item xs key={index}>
-                <Card className={classes.card} id={list._id} onClick={handleListClick}>
+                <Card
+                    className={classes.card}
+                    id={list.id}
+                    onClick={handleListClick}
+                >
                     <CardContent>
-                        {editMode ? <RemoveCircleIcon id={list._id} onClick={handleDeleteList} className={classes.icon}></RemoveCircleIcon> : ""}
-                        <Typography className={classes.typography_header} gutterBottom>
+                        {editMode ? (
+                            <RemoveCircleIcon
+                                id={list._id}
+                                onClick={handleDeleteList}
+                                className={classes.icon}
+                            ></RemoveCircleIcon>
+                        ) : (
+                            ''
+                        )}
+                        <Typography
+                            className={classes.typography_header}
+                            gutterBottom
+                        >
                             {list.name}
                         </Typography>
                         <Typography className={classes.typography} gutterBottom>
@@ -125,7 +134,7 @@ export default function Dashboard() {
                     </CardContent>
                 </Card>
             </Grid>
-        );
+        ));
         return cards;
     };
 
@@ -134,42 +143,45 @@ export default function Dashboard() {
         setToListPage(true);
     }
 
-    async function handleDeleteList(event) { 
+    async function handleDeleteList(event) {
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) {
+        if (token === undefined) {
             Cookies.remove('ogc_token');
-            setUser(state => ({...state, loggedIn: false}));
+            setUser((state) => ({ ...state, loggedIn: false }));
         }
-        const id_list_to_delete = { 
-            list_id: event.currentTarget.id
-        }; 
+        const id_list_to_delete = {
+            list_id: event.currentTarget.id,
+        };
 
         try {
-            const res = await fetch('http://localhost:1337/api/lists/deleteList/', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`
+            const res = await fetch(
+                'http://localhost:1337/api/lists/deleteList/',
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(id_list_to_delete),
                 },
-                body: JSON.stringify(id_list_to_delete)
-            });
+            );
 
-            if(res.ok) {
+            if (res.ok) {
                 setErrorMsg('List deleted!');
                 getLists();
             } else if (res.status === 498) {
                 Cookies.remove('ogc_token');
-                setUser(state => ({...state, loggedIn: false}));
+                setUser((state) => ({ ...state, loggedIn: false }));
             } else {
                 setErrorMsg('Unable to delete list. Please try again.');
             }
-        } catch(error) {
+        } catch (error) {
             console.log(error);
             setErrorMsg('An error occurred. Please try again.');
         }
-    };
+    }
 
     const handleNewListDialogClickOpen = () => {
         setNewListDialogOpen(true);
@@ -181,15 +193,15 @@ export default function Dashboard() {
 
     async function getLists() {
         setIsLoading(true);
-        
+
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) {
+        if (token === undefined) {
             Cookies.remove('ogc_token');
-            setUser(state => ({...state, loggedIn: false}));
+            setUser((state) => ({ ...state, loggedIn: false }));
         }
         try {
-            const res = await fetch('http://localhost:1337/api/lists/getAll/', {
+            const res = await fetch('http://localhost:1337/api/lists/getAll', {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -197,17 +209,17 @@ export default function Dashboard() {
                     authorization: `Bearer ${token}`,
                 },
             });
-            
-            if(res.ok) {
+
+            if (res.ok) {
                 const data = await res.json();
-                setLists(data);
+                setLists(data.payload);
             } else if (res.status === 498) {
                 Cookies.remove('ogc_token');
-                setUser(state => ({...state, loggedIn: false}));
+                setUser((state) => ({ ...state, loggedIn: false }));
             } else {
                 setErrorMsg('Unable to get current lists');
             }
-        } catch(error) {
+        } catch (error) {
             console.log(error);
             setErrorMsg('An unknown error occurred. Please try again.');
         }
@@ -220,31 +232,33 @@ export default function Dashboard() {
 
         // get token for api call
         const token = Cookies.get('ogc_token');
-        if(token === undefined) {
+        if (token === undefined) {
             Cookies.remove('ogc_token');
-            setUser(state => ({...state, loggedIn: false}));
+            setUser((state) => ({ ...state, loggedIn: false }));
         }
         try {
             const validation = schema.validate({
-                name: newListName
-            })
+                name: newListName,
+            });
 
-            if(validation.error === undefined) {
-
+            if (validation.error === undefined) {
                 const listData = {
-                    listName: newListName,
-                    listDescrip: newListDescrip
-                }
+                    name: newListName,
+                    description: newListDescrip,
+                };
 
-                const res = await fetch('http://localhost:1337/api/lists/newlist/', {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        authorization: `Bearer ${token}`,
+                const res = await fetch(
+                    'http://localhost:1337/api/lists/newlist/',
+                    {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(listData),
                     },
-                    body: JSON.stringify(listData)
-                });
+                );
 
                 if (res.ok) {
                     const data = await res.json();
@@ -252,15 +266,14 @@ export default function Dashboard() {
                     getLists();
                 } else if (res.status === 498) {
                     Cookies.remove('ogc_token');
-                    setUser(state => ({...state, loggedIn: false}));
+                    setUser((state) => ({ ...state, loggedIn: false }));
                 } else {
                     setErrorMsg('Unable to add list. Please try again.');
                 }
             } else {
                 setErrorMsg('List name is not acceptable.');
             }
-            
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
 
@@ -273,19 +286,21 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        if(errorMsg){
+        if (errorMsg) {
             let timer = setTimeout(() => {
                 setErrorMsg('');
             }, 10000);
         }
-    }, [errorMsg])
+    }, [errorMsg]);
 
-    return(
+    return (
         <div className={classes.dashboard}>
             <CssBaseline />
-            {errorMsg? <Alert severity="info">{errorMsg}</Alert> : ""}
+            {errorMsg ? <Alert severity="info">{errorMsg}</Alert> : ''}
             <Dialog open={newListDialogOpen} onClose={handleNewListDialogClose}>
-                <DialogTitle className={classes.typography_header}>New List</DialogTitle>
+                <DialogTitle className={classes.typography_header}>
+                    New List
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Enter the name and description of your list:
@@ -315,13 +330,21 @@ export default function Dashboard() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            { user.loggedIn ? "" : <Redirect to='/login'/> }
-            { toListPage ? <Redirect to={`/list?id=${routeListID}`} /> : "" }
+            {user.loggedIn ? '' : <Redirect to="/login" />}
+            {toListPage ? <Redirect to={`/list?id=${routeListID}`} /> : ''}
             <div className={classes.dashBoardToolbar}>
-                {isLoading ? <LinearProgress/> : ""}
-                <Typography className={classes.typography_dashboard_header}>Your Lists</Typography>
-                <EditIcon onClick={() => setEditMode(!editMode)} className={classes.icon}></EditIcon>
-                <AddIcon onClick={handleNewListDialogClickOpen} className={classes.icon}></AddIcon>
+                {isLoading ? <LinearProgress /> : ''}
+                <Typography className={classes.typography_dashboard_header}>
+                    Your Lists
+                </Typography>
+                <EditIcon
+                    onClick={() => setEditMode(!editMode)}
+                    className={classes.icon}
+                ></EditIcon>
+                <AddIcon
+                    onClick={handleNewListDialogClickOpen}
+                    className={classes.icon}
+                ></AddIcon>
             </div>
             <Grid container className={classes.grid} spacing={5}>
                 {gridOfCards()}
