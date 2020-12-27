@@ -7,47 +7,49 @@ import SignupPage from './components/SignupPage';
 import Dashboard from './components/Dashboard';
 import ListPage from './components/ListPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import Cookies from 'js-cookie';
 import { UserContext } from './components/UserContext';
 
 const theme = createMuiTheme({
-  palette:{
+  palette: {
     primary: {
       light: '#b6ffff',
       main: '#81d4fa',
       dark: '#4ba3c7',
-      contrastText: '#000000'
+      contrastText: '#000000',
     },
     secondary: {
-      light: '#ffd9b1',
-      main: '#faa781',
-      dark: '#c47854',
-      contrastText: '#000000'
+      light: '#d7ffd9',
+      main: '#a5d6a7',
+      dark: '#75a478',
+      contrastText: '#000000',
+    },
+    general: {
+      error: '#B00020',
+      background: '#FFFFFF',
     },
   },
 });
 
-
 function App() {
-
   const [user, setUser] = useState({
     fname: '',
     loggedIn: false,
   });
 
-  useEffect(() => { // check for token in cookies
+  useEffect(() => {
+    // check for token in cookies
     let isCancelled = false;
-    if(!isCancelled) {
+    if (!isCancelled) {
       const token_exists = Cookies.get('ogc_token');
-      if(token_exists) {
-        setUser(state => ({...state, loggedIn: true}));
+      if (token_exists) {
+        setUser((state) => ({ ...state, loggedIn: true }));
       }
     }
-    return () => isCancelled = true; // fixes Warning: Can't perform a React state update on an unmounted component.
+    return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
   }, []);
-
 
   return (
     <div className="App">
@@ -57,14 +59,14 @@ function App() {
             <CssBaseline />
             <HeadingBar />
             <Switch>
-                <Route path="/" exact component={LandingPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/signup" component={SignupPage} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/list" component={ListPage} />
+              <Route path="/" exact component={LandingPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/signup" component={SignupPage} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/list" component={ListPage} />
             </Switch>
           </UserContext.Provider>
-        </ThemeProvider>  
+        </ThemeProvider>
       </Router>
     </div>
   );
