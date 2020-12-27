@@ -115,7 +115,7 @@ export default function Dashboard() {
                     <CardContent>
                         {editMode ? (
                             <RemoveCircleIcon
-                                id={list._id}
+                                id={list.id}
                                 onClick={handleDeleteList}
                                 className={classes.icon}
                             ></RemoveCircleIcon>
@@ -156,7 +156,7 @@ export default function Dashboard() {
 
         try {
             const res = await fetch(
-                'http://localhost:1337/api/lists/deleteList/',
+                'http://localhost:1337/api/lists/deleteList',
                 {
                     method: 'POST',
                     mode: 'cors',

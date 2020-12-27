@@ -264,7 +264,7 @@ export default function ListPage() {
 
             const list_payload = {
                 list: {
-                    id: JSON.stringify(list_id),
+                    id: list_id,
                 },
             };
 
@@ -282,7 +282,6 @@ export default function ListPage() {
 
                 if (res.ok) {
                     const data = await res.json();
-                    console.log(data);
                     setListData(data.payload.items);
                 } else {
                     setErrorMsg(
