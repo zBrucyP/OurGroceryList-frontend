@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Redirect } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';

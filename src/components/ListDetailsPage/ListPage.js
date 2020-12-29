@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { lighten, makeStyles, useTheme } from '@material-ui/core/styles';
-import { UserContext } from './UserContext';
+import { UserContext } from './../UserContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';

@@ -17,7 +17,7 @@ import Joi from 'joi';
 import Cookies from 'js-cookie';
 import { LinearProgress } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import { UserContext } from './UserContext';
+import { UserContext } from './../UserContext';
 
 // base form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
 
@@ -40,8 +40,6 @@ const schema = Joi.object({
         .email({ tlds: { allow: false } })
         .trim()
         .required(),
-
-    fname: Joi.string().trim().min(2).max(50).required(),
 
     password: Joi.string().trim().min(8).max(100).required(),
 });
@@ -79,10 +77,8 @@ export default function SignUp() {
 
     const { user, setUser } = useContext(UserContext);
 
-    const [fname, setFName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPass, setConfirmPass] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [toDashboard, setToDashboard] = useState(false);
@@ -104,28 +100,17 @@ export default function SignUp() {
         // reset error message
         setErrorMsg('');
 
-        // ensure passwords match
-        if (input.password.toString() === input.confPass.toString()) {
-            // validate input with schema
-            const validation = schema.validate({
-                fname: input.fname,
-                password: input.password,
-                email: input.email,
-            });
+        // validate input with schema
+        const validation = schema.validate({
+            password: input.password,
+            email: input.email,
+        });
 
-            // no joi errors, user input is valid
-            if (validation.error === undefined) {
-                return true;
-            } else {
-                // user input is not valid
-                setErrorMsg(
-                    'Input does not match requirements:' + validation.error,
-                );
-                return false;
-            }
+        // no joi errors, user input is valid
+        if (validation.error === undefined) {
+            return true;
         } else {
-            // passwords did not match
-            setErrorMsg('Passwords do not match');
+            // user input is not valid
             return false;
         }
     };
@@ -139,17 +124,15 @@ export default function SignUp() {
             if (!isCancelled) {
                 // collect data
                 const formData = {
-                    fname: fname,
                     email: email,
                     password: password,
-                    confPass: confirmPass,
                 };
 
                 // validate data
                 if (inputIsValid(formData)) {
                     // post to server, get response
                     const res = await fetch(
-                        'http://localhost:1337/auth/signup/',
+                        'http://localhost:1337/auth/login/',
                         {
                             method: 'POST',
                             mode: 'cors',
@@ -172,18 +155,12 @@ export default function SignUp() {
                         });
                         setIsLoading(false);
                         setToDashboard(true); // redirect user to dashboard on successful signup
-                    } else if (res.status === 409) {
-                        setErrorMsg(
-                            'Email is already in use. Please choose a different one or try logging in.',
-                        );
                     } else {
-                        setErrorMsg(
-                            'An error occurred. Please check your entries and try again soon.',
-                        );
+                        console.log(res);
+                        setErrorMsg('Email or password is incorrect.2');
                     }
                 } else {
-                    console.log('Input not valid');
-                    //return false;
+                    setErrorMsg('Email or password is incorrect.3');
                 }
             }
             return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
@@ -203,24 +180,11 @@ export default function SignUp() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Login
                 </Typography>
                 {errorMsg ? <Alert severity="error">{errorMsg}</Alert> : ''}
                 <form className={classes.form} noValidate onSubmit={submitForm}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                value={fname}
-                                onChange={(e) => setFName(e.target.value)}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="fname"
-                                label="First Name"
-                                name="firstname"
-                                autoComplete="fname"
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 value={email}
@@ -248,31 +212,6 @@ export default function SignUp() {
                                 autoComplete="current-password"
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                value={confirmPass}
-                                onChange={(e) => setConfirmPass(e.target.value)}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="reEnterPassword"
-                                label="Confirm Password"
-                                type="password"
-                                id="reEnterPassword"
-                                autoComplete="current-password"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        value="allowExtraEmails"
-                                        color="primary"
-                                    />
-                                }
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -281,12 +220,12 @@ export default function SignUp() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Login
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link to="/login" variant="body2">
-                                Already have an account? Sign in
+                            <Link to="/signup" variant="body2">
+                                Need to create an account? Sign up
                             </Link>
                         </Grid>
                     </Grid>
