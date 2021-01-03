@@ -17,7 +17,7 @@ import Joi from 'joi';
 import Cookies from 'js-cookie';
 import { LinearProgress } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import { UserContext } from './../UserContext';
+import { UserContext } from '../../context/UserContext';
 
 // base form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
 
