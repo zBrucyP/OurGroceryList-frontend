@@ -5,4 +5,11 @@ body {
   overflow: auto;
 }
 
+.App {
+  width: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
 /*# sourceMappingURL=App.css.map */

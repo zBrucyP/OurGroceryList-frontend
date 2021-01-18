@@ -51,7 +51,7 @@ export default function HeadingBar() {
                         <button className="heading-button">
                             <Link
                                 to="/login"
-                                className="button-link button-text"
+                                className="button-link login-button-text"
                             >
                                 Login
                             </Link>

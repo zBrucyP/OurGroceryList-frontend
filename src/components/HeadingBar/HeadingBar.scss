@@ -1,5 +1,8 @@
 @use '../../App';
 
+$medium-screen-width: 700px;
+$small-screen-width: 400px;
+
 .button {
 }
 
@@ -10,9 +13,13 @@
 .site-header {
     color: App.$text-black;
     font-family: App.$montserrat;
-    font-weight: 600;
+    font-weight: App.$font-semibold;
     font-size: 2.5em;
     margin-left: 0.2em;
+
+    @media screen and (max-width: $medium-screen-width) {
+        font-size: 1em;
+    }
 }
 
 .heading-bar {
@@ -21,6 +28,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .heading-bar-flex-item {
@@ -41,7 +49,7 @@
     border: none;
     background: none;
     font-family: App.$montserrat;
-    font-weight: 400;
+    font-weight: App.$font-regular;
     font-size: 1.2em;
 
     .button-link {
@@ -57,6 +65,9 @@
         padding: 0.25em;
         width: auto;
     }
+
+    @media screen and (max-width: $medium-screen-width) {
+    }
 }
 
 .signup-button {
@@ -65,5 +76,17 @@
     border-radius: 8px;
     &:hover {
         background: App.$primary;
+    }
+}
+
+.signup-button-text {
+    &:hover {
+        color: App.$text-black;
+    }
+}
+
+.login-button-text {
+    &:hover {
+        color: App.$p_dark;
     }
 }

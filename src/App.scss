@@ -11,6 +11,9 @@ $error: #b00020;
 $background-white: #ffffff;
 $text-black: #000000;
 $montserrat: 'Montserrat', sans-serif;
+$font-light: 300;
+$font-regular: 400;
+$font-semibold: 600;
 
 html,
 body {
@@ -18,8 +21,9 @@ body {
     overflow: auto;
 }
 
-body {
-}
-
 .App {
+    width: 100%;
+    background-color: $background-white;
+    overflow: hidden;
+    overflow-x: hidden;
 }
