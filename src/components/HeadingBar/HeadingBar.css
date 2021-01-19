@@ -50,6 +50,9 @@ body {
 
 .heading-bar-logo-item {
   margin: 0.5em;
+  margin-left: 1.5em;
+  margin-top: 1em;
+  margin-right: 0;
 }
 
 .heading-button {

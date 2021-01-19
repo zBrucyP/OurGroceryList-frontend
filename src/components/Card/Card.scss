@@ -1,7 +1,11 @@
 @use '../../App';
 
 .card {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    flex-shrink: 1;
+    justify-content: center;
     margin: 1.5em;
     text-align: center;
     border-radius: 5px;
@@ -10,12 +14,14 @@
 
 .card-image {
     width: 20em;
-    margin: 1em;
+    margin: auto;
     height: 20em; // this makes the text align
+    flex-shrink: 1;
 }
 
 .card-text {
     font-family: App.$montserrat;
     font-weight: App.$font-regular;
     font-size: 1.5em;
+    flex-shrink: 1;
 }

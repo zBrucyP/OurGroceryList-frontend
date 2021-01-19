@@ -4,6 +4,8 @@ import { UserContext } from '../../context/UserContext';
 import CardSet from '../../components/CardSet/CardSet';
 import card from '../../models/card';
 import constants from '../../utils/constants';
+import { Link } from 'react-router-dom';
+import './LandingPage.css';
 
 
 
@@ -17,8 +19,22 @@ const cardInfoArray = () => {
 export default function LandingPage() {
     const { user, setUser } = useContext(UserContext);
 
-    return <div>
-            <div className="first-half"></div>
+    return (
+        <div>
+            <div className="landing-first-half">
+                <div className="landing-image-container">
+                    <img src="/images/landing-notLoggedIn.jpg" className="landing-image" />
+                </div>
+                <div className="landing-greeting-cta-container">
+                    <p className="landing-greeting-header"> Find Your Inner Shopping List</p>
+                    <p className="landing-gretting-subtext">Learn more about what we offer</p>
+                    <Link to="/signup">
+                        <button className="landing-cta-signup-button">Sign Up Now!</button>
+                    </Link>
+                    
+                </div>
+            </div>
             <div><CardSet cardInfoArr= { cardInfoArray() }/></div>
-        </div>;
+        </div>
+    );
 }

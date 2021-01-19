@@ -1,0 +1,66 @@
+@use '../../App';
+
+.landing-first-half {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
+}
+
+.landing-image-container {
+    width: 55%;
+    flex-grow: 1;
+    margin: 2em;
+    @media screen and (max-width: App.$small-screen-width) {
+        margin: 1em;
+        //margin-bottom: 0.5em;
+    }
+}
+
+.landing-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.landing-greeting-cta-container {
+    width: 30%;
+    flex-grow: 1;
+    margin: 2em;
+    text-align: center;
+    @media screen and (max-width: App.$small-screen-width) {
+        margin-top: 0.5em;
+    }
+}
+
+.landing-greeting-header {
+    font-family: App.$montserrat;
+    font-weight: App.$font-semibold;
+    font-size: 2.2em;
+    @media screen and (max-width: App.$small-screen-width) {
+        margin-top: 0.5em;
+    }
+}
+
+.landing-gretting-subtext {
+    font-family: App.$montserrat;
+    font-weight: App.$font-light;
+    font-size: 1.4em;
+}
+
+.landing-cta-signup-button {
+    background: App.$primary;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    border: none;
+    font-family: App.$montserrat;
+    font-weight: App.$font-regular;
+    font-size: 1.2em;
+    padding: 1em;
+    margin-top: 2em;
+
+    &:hover {
+        background: App.$text-black;
+        color: App.$background-white;
+        cursor: pointer;
+    }
+}
