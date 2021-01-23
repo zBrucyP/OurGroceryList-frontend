@@ -24,7 +24,7 @@ body {
   flex-grow: 1;
   margin: 2em;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .landing-image-container {
     margin: 1em;
   }
@@ -41,7 +41,7 @@ body {
   margin: 2em;
   text-align: center;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .landing-greeting-cta-container {
     margin-top: 0.5em;
   }
@@ -52,7 +52,7 @@ body {
   font-weight: 600;
   font-size: 2.2em;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .landing-greeting-header {
     margin-top: 0.5em;
   }

@@ -17,16 +17,16 @@ export default function HeadingBar() {
         <div className="heading-bar">
             <div className="heading-bar-flex-item">
                 <div className="heading-bar-logo-item">
-                    <img src={logo} className="" />
+                    <img src={logo} className="heading-bar-logo-item-logo" />
                 </div>
                 <div className="heading-bar-logo-item">
                     <Link className="site-header-link" to="/">
-                        <div className="site-header">Our Grocery List</div>
+                        <div className="heading-bar-logo-item-title">Our Grocery List</div>
                     </Link>
                 </div>
             </div>
             <div className="heading-bar-flex-item">
-                <div className="heading-bar-nav-item">
+                <div className="heading-bar-nav-item heading-bar-nav-item-greeting">
                     {user.fname ? (
                         <Typography variant="body1">
                             Hi, {user.fname}!
@@ -62,14 +62,14 @@ export default function HeadingBar() {
                     {user.loggedIn ? (
                         ''
                     ) : (
-                        <button className="heading-button signup-button">
-                            <Link
+                        <Link
                                 to="/signup"
-                                className="button-link signup-button-text"
+                                className="button-link "
                             >
+                            <button className="heading-button signup-button">
                                 Sign up
-                            </Link>
-                        </button>
+                            </button>
+                        </Link>
                     )}
                 </div>
             </div>
