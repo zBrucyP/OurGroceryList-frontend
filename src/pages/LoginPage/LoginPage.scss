@@ -1,0 +1,36 @@
+@use '../../App';
+
+.login-container {
+    width: 100%;
+    text-align: center;
+}
+
+.login-card {
+    display: flex;
+    width: 50%;
+    margin: auto;
+    margin-top: 2em;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 3px 3px 4px 3px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+    font-weight: App.$font-semibold;
+    font-size: x-large;
+}
+
+.field-login {
+    margin: 0.5em;
+    border-radius: 3px;
+    padding: 0.5em;
+}
+
+.link-create-account {
+}
+
+.button-login {
+    font-family: App.$montserrat;
+    margin-top: 1em;
+    width: 6em;
+}

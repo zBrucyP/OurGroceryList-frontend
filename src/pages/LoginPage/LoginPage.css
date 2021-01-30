@@ -17,30 +17,36 @@ body,
   height: 100%;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  flex-shrink: 1;
-  justify-content: center;
-  margin: 1.5em;
+.login-container {
+  width: 100%;
   text-align: center;
+}
+
+.login-card {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  margin-top: 2em;
+  flex-direction: column;
   border-radius: 5px;
   box-shadow: 3px 3px 4px 3px rgba(0, 0, 0, 0.25);
 }
 
-.card-image {
-  width: 20em;
-  margin: auto;
-  height: 20em;
-  flex-shrink: 1;
+.title {
+  font-weight: 600;
+  font-size: x-large;
 }
 
-.card-text {
+.field-login {
+  margin: 0.5em;
+  border-radius: 3px;
+  padding: 0.5em;
+}
+
+.button-login {
   font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-size: 1.5em;
-  flex-shrink: 1;
+  margin-top: 1em;
+  width: 6em;
 }
 
-/*# sourceMappingURL=Card.css.map */
+/*# sourceMappingURL=LoginPage.css.map */
