@@ -1,13 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import Joi from 'joi';
 import Cookies from 'js-cookie';
@@ -20,14 +15,14 @@ import './LoginPage.css';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
+        <p className="copyright">
             {'Copyright © '}
-            <Link color="inherit" href="#">
-                Our Grocery.List
-            </Link>{' '}
+            {
+                'Our Grocery List '
+            }
             {new Date().getFullYear()}
             {'.'}
-        </Typography>
+        </p>
     );
 }
 
@@ -127,9 +122,11 @@ export default function SignUp() {
                     } else {
                         console.log(res);
                         setErrorMsg('Email or password is incorrect.2');
+                        setIsLoading(false);
                     }
                 } else {
                     setErrorMsg('Email or password is incorrect.3');
+                    setIsLoading(false);
                 }
             }
             return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
@@ -146,10 +143,14 @@ export default function SignUp() {
                 {toDashboard ? <Redirect to="/dashboard" /> : ''}
                 <CssBaseline />
                 <div className="">
+                    {(isLoading || user.loggedIn) ?
+                        <img src="/images/unlock.svg" className="login-img" /> : 
+                        <img src="/images/lock.svg" className="login-img" />
+                    }
                     <p className="title">
                         Login
                     </p>
-                    {errorMsg ? <Alert severity="error">{errorMsg}</Alert> : ''}
+                    {errorMsg ? <Alert severity="error" className="login-error-alert">{errorMsg}</Alert> : ''}
                     <form className="" noValidate onSubmit={submitForm}>
                         <div>
                             <div>
@@ -182,7 +183,7 @@ export default function SignUp() {
                         </button>
                         <div>
                             <Link to="/signup" className="link-create-account">
-                                Need to create an account? Sign up
+                                Need to create an account? Sign up now!
                             </Link>
                         </div>
                     </form>
