@@ -1,0 +1,62 @@
+@use '../../App';
+
+.signup-container {
+    width: 100%;
+    text-align: center;
+}
+
+.signup-card {
+    display: flex;
+    width: 50%;
+    margin: auto;
+    margin-top: 2em;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 3px 3px 4px 3px rgba(0, 0, 0, 0.25);
+}
+
+.signup-img {
+    margin-top: 1em;
+    margin-bottom: 0em;
+    width: 3em;
+}
+
+.title {
+    margin-top: 0em;
+    font-weight: App.$font-semibold;
+    font-size: x-large;
+}
+
+.signup-error-alert {
+    margin-bottom: 1em;
+}
+
+.field-signup {
+    margin: 0.5em;
+    border-radius: 3px;
+    padding: 0.5em;
+}
+
+.link-login {
+    margin-top: 0.5em;
+    text-decoration: none;
+}
+
+.button-signup {
+    font-family: App.$montserrat;
+    font-size: 1.1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 6em;
+    border-radius: 8px;
+    background-color: App.$primary;
+
+    &:hover {
+        cursor: pointer;
+        background-color: App.$p_dark;
+    }
+}
+
+.copyright {
+    font-size: 0.75em;
+}
