@@ -29,6 +29,16 @@ function App() {
         return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.
     }, []);
 
+    useEffect(() => {
+        if (user.fname === '') {
+            let nameFromCookie = Cookies.get('fname');
+            console.log(nameFromCookie);
+            if (nameFromCookie) {
+                setUser((state) => ({...state, fname: nameFromCookie}));
+            }
+        }
+    }, [user.fname]);
+
     return (
         <div className="App">
             <Router>
