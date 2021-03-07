@@ -24,6 +24,8 @@ function App() {
             const token_exists = Cookies.get('ogc_token');
             if (token_exists) {
                 setUser((state) => ({ ...state, loggedIn: true }));
+            } else { // if not logged in, make sure cookie is not left set
+                Cookies.remove('fname');
             }
         }
         return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.

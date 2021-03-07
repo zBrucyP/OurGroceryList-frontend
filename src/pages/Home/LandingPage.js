@@ -28,10 +28,15 @@ export default function LandingPage() {
                 <div className="landing-greeting-cta-container">
                     <p className="landing-greeting-header"> Find Your Inner Shopping List</p>
                     <p className="landing-gretting-subtext">Learn more about what we offer</p>
-                    <Link to="/signup">
-                        <button className="landing-cta-signup-button">Sign Up Now!</button>
-                    </Link>
-                    
+                    { user.loggedIn?
+                        <Link to="/dashboard">
+                            <button className="landing-cta-signup-button">To Dashboard</button>
+                        </Link>
+                        :
+                        <Link to="/signup">
+                            <button className="landing-cta-signup-button">Sign Up Now!</button>
+                        </Link>
+                    }
                 </div>
             </div>
             <div><CardSet cardInfoArr= { cardInfoArray() }/></div>

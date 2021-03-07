@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
 import Joi from 'joi';
 import Cookies from 'js-cookie';
