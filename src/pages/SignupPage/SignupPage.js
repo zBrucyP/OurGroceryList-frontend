@@ -131,7 +131,6 @@ export default function SignUp() {
                         const data = await res.json();
                         Cookies.set('ogc_token', data.token, { expires: 1 });
                         Cookies.set('fname', data.fname, { expires: 1 });
-                        Cookies.set('ogcid', data.ogcid, { expires: 1 });
                         setUser({
                             fname: data.fname,
                             loggedIn: true,
@@ -220,17 +219,6 @@ export default function SignUp() {
                                     autoComplete="current-password"
                                     placeholder="Confirm Password"
                                     className="field-signup"
-                                />
-                            </div>
-                            <div>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            value="allowExtraEmails"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
                             </div>
                         </div>

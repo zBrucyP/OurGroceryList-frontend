@@ -37,8 +37,9 @@ export default function HeadingBar() {
                 </div>
                 <div className="heading-bar-nav-item">
                     {user.loggedIn ? (
-                        <button className="">
-                            <Link to="/dashboard">Dashboard</Link>
+                        <button className="heading-button">
+                            <Link to="/dashboard" 
+                                  className="button-link">Dashboard</Link>
                         </button>
                     ) : (
                         ''
