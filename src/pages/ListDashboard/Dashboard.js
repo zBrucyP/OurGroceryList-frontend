@@ -1,96 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { UserContext } from '../../context/UserContext';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Redirect } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Card from '../../components/Card/Card';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
+import './Dashboard.css';
 
 const schema = Joi.object({
     name: Joi.string().min(2).max(40).trim().required(),
 });
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        flexGrow: 1,
-    },
-
-    dashboard: {
-        marginTop: '5%',
-        marginLeft: '5%',
-        marginRight: '5%',
-        background: fade(theme.palette.secondary.light, 0.5),
-    },
-
-    dashBoardToolbar: {
-        width: '100%',
-        display: 'flex',
-        background: fade(theme.palette.secondary.main, 0.85),
-    },
-
-    grid: {
-        width: '100%',
-        padding: '3%',
-    },
-
-    typography: {
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '80%',
-    },
-
-    typography_dashboard_header: {
-        flexGrow: 1,
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '200%',
-    },
-
-    typography_header: {
-        flexGrow: 1,
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '130%',
-    },
-
-    icon: {
-        align: 'right',
-        fontSize: '200%',
-        cursor: 'pointer',
-        '&:hover': {
-            color: theme.palette.primary.dark,
-        },
-    },
-
-    card: {
-        cursor: 'pointer',
-    },
-}));
-
+//TODO: Rewrite this entire component
 export default function Dashboard() {
-    const classes = useStyles();
     const { user, setUser } = useContext(UserContext); // fname, loggedIn
 
     const [isLoading, setIsLoading] = useState(false);
@@ -106,34 +36,7 @@ export default function Dashboard() {
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
         const cards = lists.map((list, index) => (
-            <Grid item xs key={index}>
-                <Card
-                    className={classes.card}
-                    id={list.id}
-                    onClick={handleListClick}
-                >
-                    <CardContent>
-                        {editMode ? (
-                            <RemoveCircleIcon
-                                id={list.id}
-                                onClick={handleDeleteList}
-                                className={classes.icon}
-                            ></RemoveCircleIcon>
-                        ) : (
-                            ''
-                        )}
-                        <Typography
-                            className={classes.typography_header}
-                            gutterBottom
-                        >
-                            {list.name}
-                        </Typography>
-                        <Typography className={classes.typography} gutterBottom>
-                            {list.description}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
+            <div key={index}>{list.name}</div>
         ));
         return cards;
     };
@@ -215,6 +118,7 @@ export default function Dashboard() {
                 setLists(data.payload);
             } else if (res.status === 498) {
                 Cookies.remove('ogc_token');
+                Cookies.remove('fname');
                 setUser((state) => ({ ...state, loggedIn: false }));
             } else {
                 setErrorMsg('Unable to get current lists');
@@ -294,11 +198,11 @@ export default function Dashboard() {
     }, [errorMsg]);
 
     return (
-        <div className={classes.dashboard}>
+        <div className="dashboard">
             <CssBaseline />
             {errorMsg ? <Alert severity="info">{errorMsg}</Alert> : ''}
             <Dialog open={newListDialogOpen} onClose={handleNewListDialogClose}>
-                <DialogTitle className={classes.typography_header}>
+                <DialogTitle className="">
                     New List
                 </DialogTitle>
                 <DialogContent>
@@ -322,33 +226,39 @@ export default function Dashboard() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleNewListDialogClose} color="primary">
+                    <button onClick={handleNewListDialogClose}>
                         Cancel
-                    </Button>
-                    <Button onClick={handleAddNewList} color="primary">
+                    </button>
+                    <button onClick={handleAddNewList}>
                         Add
-                    </Button>
+                    </button>
                 </DialogActions>
             </Dialog>
             {user.loggedIn ? '' : <Redirect to="/login" />}
             {toListPage ? <Redirect to={`/list?id=${routeListID}`} /> : ''}
-            <div className={classes.dashBoardToolbar}>
-                {isLoading ? <LinearProgress /> : ''}
-                <Typography className={classes.typography_dashboard_header}>
-                    Your Lists
-                </Typography>
-                <EditIcon
-                    onClick={() => setEditMode(!editMode)}
-                    className={classes.icon}
-                ></EditIcon>
-                <AddIcon
-                    onClick={handleNewListDialogClickOpen}
-                    className={classes.icon}
-                ></AddIcon>
+            <div className="dashboard-header">
+                <div className="dashboard-title-container">
+                    <p className="dashboard-title">
+                        My Lists
+                    </p>
+                </div>
+                <div className="dashboard-icons-container">
+                    <img 
+                        onClick={() => setEditMode(!editMode)} 
+                        src="/images/icon-edit.svg"
+                        className="icon-add-edit"
+                    />
+                    <img 
+                        onClick={handleNewListDialogClickOpen} 
+                        src="/images/icon-add.svg"
+                        className="icon-add-edit"
+                    />
+                </div>
             </div>
-            <Grid container className={classes.grid} spacing={5}>
+            <div className="dashboard-body">
+                {isLoading ? <LinearProgress /> : ''}
                 {gridOfCards()}
-            </Grid>
+            </div>
         </div>
     );
 }

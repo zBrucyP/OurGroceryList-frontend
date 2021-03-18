@@ -2,14 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import Cookies from 'js-cookie';
 import './HeadingBar.css';
 
 export default function HeadingBar() {
     const { user, setUser } = useContext(UserContext); // fname, loggedIn
-
-    const [userId, setUserId] = useState(null);
-    const [userAvatar, setUserAvatar] = useState(null);
 
     const logo = require('../../img/Logo.svg');
 
@@ -28,9 +24,9 @@ export default function HeadingBar() {
             <div className="heading-bar-flex-item">
                 <div className="heading-bar-nav-item heading-bar-nav-item-greeting">
                     {user.fname ? (
-                        <Typography variant="body1">
+                        <p className="heading-button">
                             Hi, {user.fname}!
-                        </Typography>
+                        </p>
                     ) : (
                         ''
                     )}

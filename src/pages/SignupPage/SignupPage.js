@@ -145,7 +145,6 @@ export default function SignUp() {
                     }
                 } else {
                     console.log('Input not valid');
-                    //return false;
                 }
             }
             return () => (isCancelled = true); // fixes Warning: Can't perform a React state update on an unmounted component.

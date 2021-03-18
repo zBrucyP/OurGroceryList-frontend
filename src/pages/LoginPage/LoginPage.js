@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
 import Joi from 'joi';
 import Cookies from 'js-cookie';
