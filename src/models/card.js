@@ -1,6 +1,9 @@
 export default class card {
-    constructor(imagePath, text) {
-        this.imagePath = imagePath;
-        this.text = text;
+    constructor(id, imagePath, text, description, onClick) {
+        this.id = id? id : null;
+        this.imagePath = imagePath? imagePath : null;
+        this.text = text? text: null;
+        this.description = description? description : null;
+        this.onClick = onClick? onClick : null;
     }
 }

@@ -3,8 +3,7 @@
 .card {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex: 1 1 0;
     justify-content: center;
     margin: 1.5em;
     text-align: center;
@@ -24,4 +23,15 @@
     font-weight: App.$font-regular;
     font-size: 1.5em;
     flex-shrink: 1;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.card-description {
+    font-family: App.$montserrat;
+    font-weight: App.$font-regular;
+    font-size: 1.1em;
+    flex-shrink: 1;
+    margin-left: 2em;
+    margin-right: 2em;
 }

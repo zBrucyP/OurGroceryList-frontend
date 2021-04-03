@@ -13,7 +13,10 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
+import card from '../../models/card';
 import './Dashboard.css';
+import constants from '../../utils/constants';
+import CardSet from '../../components/CardSet/CardSet';
 
 const schema = Joi.object({
     name: Joi.string().min(2).max(40).trim().required(),
@@ -35,10 +38,16 @@ export default function Dashboard() {
 
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
-        const cards = lists.map((list, index) => (
-            <div key={index}>{list.name}</div>
+        const cardInfos = lists.map((list, index) => (
+            new card(
+                list.id, 
+                null, 
+                list.name, 
+                list.description, 
+                handleListClick
+                )
         ));
-        return cards;
+        return <CardSet cardInfoArr= { cardInfos }/>;
     };
 
     function handleListClick(event) {

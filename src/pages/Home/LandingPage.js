@@ -10,9 +10,9 @@ import './LandingPage.css';
 
 
 const cardInfoArray = () => {
-    const card1 = new card(constants.LANDING_PAGE_CARD_ONE_IMAGE_PATH, constants.LANDING_PAGE_CARD_ONE_TEXT);
-    const card2 = new card(constants.LANDING_PAGE_CARD_TWO_IMAGE_PATH, constants.LANDING_PAGE_CARD_TWO_TEXT);
-    const card3 = new card(constants.LANDING_PAGE_CARD_THREE_IMAGE_PATH, constants.LANDING_PAGE_CARD_THREE_TEXT);
+    const card1 = new card(null, constants.LANDING_PAGE_CARD_ONE_IMAGE_PATH, constants.LANDING_PAGE_CARD_ONE_TEXT);
+    const card2 = new card(null, constants.LANDING_PAGE_CARD_TWO_IMAGE_PATH, constants.LANDING_PAGE_CARD_TWO_TEXT);
+    const card3 = new card(null, constants.LANDING_PAGE_CARD_THREE_IMAGE_PATH, constants.LANDING_PAGE_CARD_THREE_TEXT);
     return [card1, card2, card3];
 }
 
