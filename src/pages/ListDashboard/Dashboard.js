@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { Redirect } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Card from '../../components/Card/Card';
+import ListCard from '../../components/ListCard/ListCard';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,10 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
-import card from '../../models/card';
 import './Dashboard.css';
-import constants from '../../utils/constants';
-import CardSet from '../../components/CardSet/CardSet';
+
 
 const schema = Joi.object({
     name: Joi.string().min(2).max(40).trim().required(),
@@ -38,21 +35,23 @@ export default function Dashboard() {
 
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
-        const cardInfos = lists.map((list, index) => (
-            new card(
-                list.id, 
-                null, 
-                list.name, 
-                list.description, 
-                handleListClick
-                )
+        return lists.map((list, index) => (
+            <ListCard 
+                key={index}
+                id={index}
+                listName={list.name}
+                listDescription={list.description}
+                editMode={editMode}
+                onClick={handleListClick}
+            />
         ));
-        return <CardSet cardInfoArr= { cardInfos }/>;
     };
 
     function handleListClick(event) {
-        setRouteListID(event.currentTarget.id);
-        setToListPage(true);
+        if(!editMode) {
+            setRouteListID(event.currentTarget.id);
+            setToListPage(true);
+        }
     }
 
     async function handleDeleteList(event) {
@@ -208,7 +207,6 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard">
-            <CssBaseline />
             {errorMsg ? <Alert severity="info">{errorMsg}</Alert> : ''}
             <Dialog open={newListDialogOpen} onClose={handleNewListDialogClose}>
                 <DialogTitle className="">
@@ -266,7 +264,7 @@ export default function Dashboard() {
             </div>
             <div className="dashboard-body">
                 {isLoading ? <LinearProgress /> : ''}
-                {gridOfCards()}
+                <div className="card-holder">{gridOfCards()}</div>
             </div>
         </div>
     );
