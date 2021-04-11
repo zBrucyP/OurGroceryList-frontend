@@ -6,13 +6,16 @@ export default function ListCard (props) {
     return (
         <div 
             id={props.id? props.id : ''} 
-            onClick={props.onClick? props.onClick : null} 
+            onClick={props.onCardClick? props.onCardClick : null} 
             className="card"
         >
             {props.editMode
             ? <img 
+                id={props.id? props.id : ''}
                 src="/images/icon-remove.svg"
-                className="icon-remove"/>
+                className="icon-remove" 
+                onClick={props.onDeleteListClick? props.onDeleteListClick : null} 
+                />
             : ''}
             {props.listName
             ? <p className="card-text">{ props.listName }</p> 

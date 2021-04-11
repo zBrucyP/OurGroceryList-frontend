@@ -38,11 +38,12 @@ export default function Dashboard() {
         return lists.map((list, index) => (
             <ListCard 
                 key={index}
-                id={index}
+                id={list.id}
                 listName={list.name}
                 listDescription={list.description}
                 editMode={editMode}
-                onClick={handleListClick}
+                onCardClick={handleListClick}
+                onDeleteListClick={handleDeleteList}
             />
         ));
     };
@@ -61,6 +62,8 @@ export default function Dashboard() {
             Cookies.remove('ogc_token');
             setUser((state) => ({ ...state, loggedIn: false }));
         }
+
+        console.log(event.currentTarget.id);
         const id_list_to_delete = {
             list_id: event.currentTarget.id,
         };
