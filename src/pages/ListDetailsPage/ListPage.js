@@ -4,6 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { Redirect, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import ListTableRow from '../../components/ListTableRow/ListTableRow';
+import Utils from '../../utils/Utils';
 import './ListPage.css';
 
 
@@ -42,14 +43,6 @@ export default function ListPage() {
             ))
         }
     }
-
-    const headers = [
-        "Bought?",
-        "Name",
-        "Price",
-        "Quantity",
-        "Description"
-    ];
 
     const handleAddItem = async (event) => {
         setAddItemObject(null);
@@ -134,7 +127,7 @@ export default function ListPage() {
                 if (res.ok) {
                     const data = await res.json();
                     setListName(data.payload.name);
-                    setListItems(data.payload.items);
+                    setListItems(Utils.mapToArrayOfListItem(data.payload.items));
                 } else {
                     setErrorMsg(
                         'Server responded with unknown error. Please try reopening the list',

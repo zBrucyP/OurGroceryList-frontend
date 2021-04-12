@@ -267,7 +267,7 @@ export default function Dashboard() {
             </div>
             <div className="dashboard-body">
                 {isLoading ? <LinearProgress /> : ''}
-                <div className="card-holder">{gridOfCards()}</div>
+                <div className="list-card-holder">{gridOfCards()}</div>
             </div>
         </div>
     );

@@ -33,8 +33,9 @@
     margin: 1em;
 }
 
-.card-holder {
+.list-card-holder {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: left;
 }

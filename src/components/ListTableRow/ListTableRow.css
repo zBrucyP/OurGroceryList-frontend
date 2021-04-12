@@ -41,6 +41,12 @@ body,
   margin-bottom: auto;
 }
 
+.column-label {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+}
+
 .input-text {
   border-radius: 3px;
   margin-bottom: 0.75em;
