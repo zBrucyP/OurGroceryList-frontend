@@ -185,6 +185,8 @@ export default function Dashboard() {
                 } else {
                     setErrorMsg('Unable to add list. Please try again.');
                 }
+                setNewListName('');
+                setNewListDescrip('');
             } else {
                 setErrorMsg('List name is not acceptable.');
             }

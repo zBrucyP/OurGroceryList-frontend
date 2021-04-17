@@ -5,12 +5,8 @@ import { Redirect, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import ListTableRow from '../../components/ListTableRow/ListTableRow';
 import Utils from '../../utils/Utils';
+import ListService from '../../service/ListService';
 import './ListPage.css';
-
-
-function createData(name, bought, price) {
-    return { name, bought, price };
-}
 
 const LISTS_API_URL = 'http://localhost:1337/api/lists';
 
@@ -25,11 +21,7 @@ export default function ListPage() {
     const [listItems, setListItems] = useState(null);
     const [listItemsToAdd, setListItemsToAdd] = useState([]);
     const [listItemsToUpdate, setListItemsToUpdate] = useState([]);
-    const [addItemObject, setAddItemObject] = useState({
-        name: '',
-        bought: false,
-        price: 0,
-    });
+    const [listId, setListId] = useState('');
 
     const rows = () => {
         if(listItems){
@@ -39,60 +31,52 @@ export default function ListPage() {
                     itemIndex={index}
                     id={listItem.id}
                     listItem={listItem}
+                    handleChange={handleListItemChange}
                 />
             ))
         }
     }
 
-    const handleAddItem = async (event) => {
-        setAddItemObject(null);
+    // Accepts change details from child element to update listItems
+    function handleListItemChange(listItemIndex, field, newValue) {
+        let items = [...listItems]; // shallow copy
+        let item = {...items[listItemIndex]}; // pull item from listItems
+        item[field] = newValue; // update value
+        item.isItemToUpdate = item.isItemToAdd ? false : true; // flag item for update if not already flagged to add
+        items[listItemIndex] = item; // update shallow copy
+        setListItems(items); // update state with shallow copy
+    }
 
+    const handleAddItem = (event) => {
+        let newItem = {
+            list_id: listId,
+            isItemToAdd: true,
+        }
+        let items = [...listItems];
+        items = [...items, Utils.generateListItem(newItem)];
+        setListItems(items);
+    };
+    
+    // Send any items to be added and updated to service
+    function handleSaveButtonClick() {
+        setIsLoading(true);
+        if(listItemsToAdd.length>0) ListService.addListItems(listItemsToAdd);
+        if(listItemsToUpdate.length>0) ListService.updateListItems(listItemsToUpdate);
+        setIsLoading(false);
+    }
+
+    const findListId = async () => {
         try {
-            // @todo: add security check on backend so user cannot just change any list by changing url
+            // get id from query param 'id'
             let search = window.location.search;
             let params = new URLSearchParams(search);
-            let list_id = params.get('id');
-
-            // get token for api call
-            const token = Cookies.get('ogc_token');
-            if (token === undefined) {
-                Cookies.remove('ogc_token');
-                setUser((state) => ({ ...state, loggedIn: false }));
-            }
-
-            if (list_id) {
-                const res = await fetch(
-                    `${LISTS_API_URL}/addListItem?list_id=${list_id}`,
-                    {
-                        method: 'POST',
-                        mode: 'cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            authorization: `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(addItemObject),
-                    },
-                );
-
-                if (res.ok) {
-                    setErrorMsg('Item added!');
-                    fetch_list_data();
-                }
-            } else {
-                console.log('unable to find id');
-                setToDashboard(true);
-            }
-
-            setAddItemObject(null);
+            let listIdFromURL = params.get('id');
+            setListId(listIdFromURL);
         } catch (error) {
-            console.log(error);
+            console.log('Unable to find list ID');
+            setToDashboard(true);
         }
-    };
-
-    const handleSetAddItemName = (event) => {
-        const name = event.target.value;
-        setAddItemObject((state) => ({ ...state, name: name }));
-    };
+    }
 
     const fetch_list_data = async () => {
         try {
@@ -144,8 +128,16 @@ export default function ListPage() {
 
     useEffect(() => {
         // Gets query parameter 'id' and makes initial request for list data
+        findListId();
         fetch_list_data();
     }, []);
+
+    useEffect(() => {
+        if(listItems) {
+            setListItemsToAdd(listItems.filter(item => item.isItemToAdd));
+            setListItemsToUpdate(listItems.filter(item => item.isItemToUpdate));
+        }
+    }, [listItems]);
 
     return (
         <div className="list-container">
@@ -161,12 +153,16 @@ export default function ListPage() {
                     </p>
                 </div>
                 <div className="controls-container">
-                    <button className="button-save">
+                    <button 
+                        className="button-save"
+                        onClick={handleSaveButtonClick}
+                    >
                         Save
                     </button>
                     <img 
                         src="/images/icon-add.svg"
                         className="icon"
+                        onClick={handleAddItem}
                     />
                 </div>
             </div>
