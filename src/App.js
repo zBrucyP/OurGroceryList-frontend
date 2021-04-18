@@ -15,7 +15,14 @@ function App() {
     const [user, setUser] = useState({
         fname: '',
         loggedIn: false,
+        requestLogout: logout,
     });
+
+    function logout() {
+        Cookies.remove('ogc_token');
+        Cookies.remove('fname');
+        setUser((state) => ({ ...state, loggedIn: false }));
+    }
 
     useEffect(() => {
         // check for token in cookies

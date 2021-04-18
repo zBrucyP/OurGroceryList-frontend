@@ -58,11 +58,22 @@ export default function ListPage() {
     };
     
     // Send any items to be added and updated to service
-    function handleSaveButtonClick() {
+    async function handleSaveButtonClick() {
         setIsLoading(true);
-        if(listItemsToAdd.length>0) ListService.addListItems(listItemsToAdd);
-        if(listItemsToUpdate.length>0) ListService.updateListItems(listItemsToUpdate);
+        let result = {
+            addResponse: null,
+            updateResponse: null,
+        }
+        if (listItemsToAdd.length>0){
+            result.addResponse = await ListService.addListItems(listItemsToAdd);
+            if (result.addResponse.success) listItems.map(item => item.isItemToAdd = false); // remove any items from the add list
+        }
+        if (listItemsToUpdate.length>0) {
+            let updateItemsResponse = await ListService.updateListItems(listItemsToUpdate);
+        } 
         setIsLoading(false);
+        if (!result.addResponse && !result.updateResponse) setErrorMsg('Everything is already saved!');
+        //TODO: Finish this
     }
 
     const findListId = async () => {
@@ -88,8 +99,7 @@ export default function ListPage() {
             // get token for api call
             const token = Cookies.get('ogc_token');
             if (token === undefined) {
-                Cookies.remove('ogc_token');
-                setUser((state) => ({ ...state, loggedIn: false }));
+                user.requestLogout();
             }
 
             const list_payload = {
