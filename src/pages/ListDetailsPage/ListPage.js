@@ -66,14 +66,20 @@ export default function ListPage() {
         }
         if (listItemsToAdd.length>0){
             result.addResponse = await ListService.addListItems(listItemsToAdd);
-            if (result.addResponse.success) listItems.map(item => item.isItemToAdd = false); // remove any items from the add list
+            if (result.addResponse.success) {
+                let items = listItems.map(item => {return {...item, isItemToAdd: false}});
+                setListItems(items);
+            }
         }
         if (listItemsToUpdate.length>0) {
-            let updateItemsResponse = await ListService.updateListItems(listItemsToUpdate);
+            result.updateResponse = await ListService.updateListItems(listItemsToUpdate);
+            if (result.updateResponse.success) {
+                let items = listItems.map(item => {return {...item, isItemToUpdate: false}});
+                setListItems(items);
+            }
         } 
-        setIsLoading(false);
         if (!result.addResponse && !result.updateResponse) setErrorMsg('Everything is already saved!');
-        //TODO: Finish this
+        setIsLoading(false);
     }
 
     const findListId = async () => {
