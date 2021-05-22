@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie';
 import Response from './../models/Response';
+import utils from '../utils/Utils';
 
-const LISTS_BASE_URL = 'http://localhost:1337/api/lists';
+const LISTS_BASE_URL =  utils.getBackendBaseURL() + '/api/lists';
 const LISTS_ADDLISTITEMS = '/addListItems';
 const LISTS_UPDATELISTITEMS = '/updateListItems';
 

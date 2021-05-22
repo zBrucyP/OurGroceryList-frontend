@@ -1,3 +1,5 @@
+import constants from '../utils/constants';
+
 
 // accepts response from /listDetails and returns list of ListItem
 function mapToArrayOfListItem(items) {
@@ -24,7 +26,17 @@ function generateListItem(item) {
     return listItem;
 }
 
+function getBackendBaseURL() {
+    if (process.env.NODE_ENV === 'production') {
+        return constants.OURGROCERYLISTAPI_PRODUCTION;
+    }
+    else {
+        return constants.OURGROCERYLISTAPI_DEVELOPMENT;
+    }
+}
+
 export default {
     mapToArrayOfListItem,
-    generateListItem
+    generateListItem,
+    getBackendBaseURL
 }

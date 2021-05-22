@@ -12,12 +12,16 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
+import utils from '../../utils/Utils';
 import './Dashboard.css';
+
 
 
 const schema = Joi.object({
     name: Joi.string().min(2).max(40).trim().required(),
 });
+
+const BASE_URL = utils.getBackendBaseURL();
 
 //TODO: Rewrite this entire component
 export default function Dashboard() {
@@ -70,7 +74,7 @@ export default function Dashboard() {
 
         try {
             const res = await fetch(
-                'http://localhost:1337/api/lists/deleteList',
+                `${BASE_URL}/api/lists/deleteList`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -115,7 +119,7 @@ export default function Dashboard() {
             setUser((state) => ({ ...state, loggedIn: false }));
         }
         try {
-            const res = await fetch('http://localhost:1337/api/lists/getAll', {
+            const res = await fetch(`${BASE_URL}/api/lists/getAll`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -163,7 +167,7 @@ export default function Dashboard() {
                 };
 
                 const res = await fetch(
-                    'http://localhost:1337/api/lists/newlist/',
+                    `${BASE_URL}/api/lists/newlist/`,
                     {
                         method: 'POST',
                         mode: 'cors',

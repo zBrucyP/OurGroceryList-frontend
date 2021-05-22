@@ -8,9 +8,10 @@ import Cookies from 'js-cookie';
 import { LinearProgress } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import utils from '../../utils/Utils';
 import './SignupPage.css';
 
-// base form template from: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-up
+const BASE_URL = utils.getBackendBaseURL();
 
 function Copyright() {
     return (
@@ -112,7 +113,7 @@ export default function SignUp() {
                 if (inputIsValid(formData)) {
                     // post to server, get response
                     const res = await fetch(
-                        'http://localhost:1337/auth/signup/',
+                        `${BASE_URL}/auth/signup/`,
                         {
                             method: 'POST',
                             mode: 'cors',

@@ -6,9 +6,10 @@ import Cookies from 'js-cookie';
 import ListTableRow from '../../components/ListTableRow/ListTableRow';
 import Utils from '../../utils/Utils';
 import ListService from '../../service/ListService';
+import utils from '../../utils/Utils';
 import './ListPage.css';
 
-const LISTS_API_URL = 'http://localhost:1337/api/lists';
+const LISTS_API_URL = utils.getBackendBaseURL() + '/api/lists';
 
 export default function ListPage() {
     const { user, setUser } = useContext(UserContext);
