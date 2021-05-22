@@ -1,0 +1,117 @@
+@use '../../App';
+
+$medium-screen-width: 700px;
+$small-screen-width: 400px;
+
+.button {
+}
+
+.site-header-link {
+    text-decoration: none;
+}
+
+.heading-bar {
+    background-color: App.$background-white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.heading-bar-flex-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: App.$small-screen-width) {
+        margin: auto;
+    }
+}
+
+.heading-bar-nav-item {
+    flex: 1;
+    margin: 0.5em;
+    margin-right: 2em;
+
+    @media screen and (max-width: App.$small-screen-width) {
+        margin: 0.1em;
+    }
+}
+
+.heading-bar-nav-item-greeting {
+    @media screen and (max-width: App.$small-screen-width) {
+        display: none;
+    }
+}
+
+.heading-bar-logo-item {
+    margin: 0.5em;
+    margin-left: 1.5em;
+    margin-top: 1em;
+    margin-right: 0;
+}
+
+.heading-bar-logo-item-logo {
+    @media screen and (max-width: App.$medium-screen-width) {
+        width: 3em;
+    }
+}
+
+.heading-bar-logo-item-title {
+    color: App.$text-black;
+    font-family: App.$montserrat;
+    font-weight: App.$font-semibold;
+    font-size: 2.5em;
+    margin-left: 0.2em;
+
+    @media screen and (max-width: $medium-screen-width) {
+        font-size: 1em;
+        margin-left: 0em;
+    }
+}
+
+.heading-button {
+    border: none;
+    background: none;
+    font-family: App.$montserrat;
+    font-weight: App.$font-regular;
+    font-size: 1.2em;
+
+    .button-link {
+        text-decoration: none;
+    }
+
+    .login-button-text {
+        color: App.$text-black;
+    }
+
+    .signup-button-text {
+        color: App.$background-white;
+        padding: 0.25em;
+        width: auto;
+    }
+}
+
+.signup-button {
+    background: #333333;
+    color: App.$background-white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 6em;
+    &:hover {
+        background: App.$primary;
+        color: App.$text-black;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: $medium-screen-width) {
+        width: 6em;
+    }
+}
+
+.login-button-text {
+    &:hover {
+        color: App.$p_dark;
+    }
+}

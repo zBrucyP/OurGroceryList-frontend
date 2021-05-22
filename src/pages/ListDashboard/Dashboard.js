@@ -1,96 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { UserContext } from './UserContext';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { UserContext } from '../../context/UserContext';
 import { Redirect } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import ListCard from '../../components/ListCard/ListCard';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Cookies from 'js-cookie';
 import Joi from 'joi';
+import utils from '../../utils/Utils';
+import './Dashboard.css';
+
+
 
 const schema = Joi.object({
     name: Joi.string().min(2).max(40).trim().required(),
 });
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        flexGrow: 1,
-    },
+const BASE_URL = utils.getBackendBaseURL();
 
-    dashboard: {
-        marginTop: '5%',
-        marginLeft: '5%',
-        marginRight: '5%',
-        background: fade(theme.palette.secondary.light, 0.5),
-    },
-
-    dashBoardToolbar: {
-        width: '100%',
-        display: 'flex',
-        background: fade(theme.palette.secondary.main, 0.85),
-    },
-
-    grid: {
-        width: '100%',
-        padding: '3%',
-    },
-
-    typography: {
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '80%',
-    },
-
-    typography_dashboard_header: {
-        flexGrow: 1,
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '200%',
-    },
-
-    typography_header: {
-        flexGrow: 1,
-        align: 'center',
-        color: 'inherit',
-        textDecoration: 'none',
-        fontSize: '130%',
-    },
-
-    icon: {
-        align: 'right',
-        fontSize: '200%',
-        cursor: 'pointer',
-        '&:hover': {
-            color: theme.palette.primary.dark,
-        },
-    },
-
-    card: {
-        cursor: 'pointer',
-    },
-}));
-
+//TODO: Rewrite this entire component
 export default function Dashboard() {
-    const classes = useStyles();
     const { user, setUser } = useContext(UserContext); // fname, loggedIn
 
     const [isLoading, setIsLoading] = useState(false);
@@ -105,42 +39,24 @@ export default function Dashboard() {
 
     // from data, creates cards of data to fill grid
     const gridOfCards = () => {
-        const cards = lists.map((list, index) => (
-            <Grid item xs key={index}>
-                <Card
-                    className={classes.card}
-                    id={list.id}
-                    onClick={handleListClick}
-                >
-                    <CardContent>
-                        {editMode ? (
-                            <RemoveCircleIcon
-                                id={list.id}
-                                onClick={handleDeleteList}
-                                className={classes.icon}
-                            ></RemoveCircleIcon>
-                        ) : (
-                            ''
-                        )}
-                        <Typography
-                            className={classes.typography_header}
-                            gutterBottom
-                        >
-                            {list.name}
-                        </Typography>
-                        <Typography className={classes.typography} gutterBottom>
-                            {list.description}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
+        return lists.map((list, index) => (
+            <ListCard 
+                key={index}
+                id={list.id}
+                listName={list.name}
+                listDescription={list.description}
+                editMode={editMode}
+                onCardClick={handleListClick}
+                onDeleteListClick={handleDeleteList}
+            />
         ));
-        return cards;
     };
 
     function handleListClick(event) {
-        setRouteListID(event.currentTarget.id);
-        setToListPage(true);
+        if(!editMode) {
+            setRouteListID(event.currentTarget.id);
+            setToListPage(true);
+        }
     }
 
     async function handleDeleteList(event) {
@@ -150,13 +66,15 @@ export default function Dashboard() {
             Cookies.remove('ogc_token');
             setUser((state) => ({ ...state, loggedIn: false }));
         }
+
+        console.log(event.currentTarget.id);
         const id_list_to_delete = {
             list_id: event.currentTarget.id,
         };
 
         try {
             const res = await fetch(
-                'http://localhost:1337/api/lists/deleteList',
+                `${BASE_URL}/api/lists/deleteList`,
                 {
                     method: 'POST',
                     mode: 'cors',
@@ -201,7 +119,7 @@ export default function Dashboard() {
             setUser((state) => ({ ...state, loggedIn: false }));
         }
         try {
-            const res = await fetch('http://localhost:1337/api/lists/getAll', {
+            const res = await fetch(`${BASE_URL}/api/lists/getAll`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -215,6 +133,7 @@ export default function Dashboard() {
                 setLists(data.payload);
             } else if (res.status === 498) {
                 Cookies.remove('ogc_token');
+                Cookies.remove('fname');
                 setUser((state) => ({ ...state, loggedIn: false }));
             } else {
                 setErrorMsg('Unable to get current lists');
@@ -248,7 +167,7 @@ export default function Dashboard() {
                 };
 
                 const res = await fetch(
-                    'http://localhost:1337/api/lists/newlist/',
+                    `${BASE_URL}/api/lists/newlist/`,
                     {
                         method: 'POST',
                         mode: 'cors',
@@ -270,6 +189,8 @@ export default function Dashboard() {
                 } else {
                     setErrorMsg('Unable to add list. Please try again.');
                 }
+                setNewListName('');
+                setNewListDescrip('');
             } else {
                 setErrorMsg('List name is not acceptable.');
             }
@@ -294,11 +215,10 @@ export default function Dashboard() {
     }, [errorMsg]);
 
     return (
-        <div className={classes.dashboard}>
-            <CssBaseline />
+        <div className="dashboard">
             {errorMsg ? <Alert severity="info">{errorMsg}</Alert> : ''}
             <Dialog open={newListDialogOpen} onClose={handleNewListDialogClose}>
-                <DialogTitle className={classes.typography_header}>
+                <DialogTitle className="">
                     New List
                 </DialogTitle>
                 <DialogContent>
@@ -322,33 +242,39 @@ export default function Dashboard() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleNewListDialogClose} color="primary">
+                    <button onClick={handleNewListDialogClose}>
                         Cancel
-                    </Button>
-                    <Button onClick={handleAddNewList} color="primary">
+                    </button>
+                    <button onClick={handleAddNewList}>
                         Add
-                    </Button>
+                    </button>
                 </DialogActions>
             </Dialog>
             {user.loggedIn ? '' : <Redirect to="/login" />}
             {toListPage ? <Redirect to={`/list?id=${routeListID}`} /> : ''}
-            <div className={classes.dashBoardToolbar}>
-                {isLoading ? <LinearProgress /> : ''}
-                <Typography className={classes.typography_dashboard_header}>
-                    Your Lists
-                </Typography>
-                <EditIcon
-                    onClick={() => setEditMode(!editMode)}
-                    className={classes.icon}
-                ></EditIcon>
-                <AddIcon
-                    onClick={handleNewListDialogClickOpen}
-                    className={classes.icon}
-                ></AddIcon>
+            <div className="dashboard-header">
+                <div className="dashboard-title-container">
+                    <p className="dashboard-title">
+                        My Lists
+                    </p>
+                </div>
+                <div className="dashboard-icons-container">
+                    <img 
+                        onClick={() => setEditMode(!editMode)} 
+                        src="/images/icon-edit.svg"
+                        className="icon-add-edit"
+                    />
+                    <img 
+                        onClick={handleNewListDialogClickOpen} 
+                        src="/images/icon-add.svg"
+                        className="icon-add-edit"
+                    />
+                </div>
             </div>
-            <Grid container className={classes.grid} spacing={5}>
-                {gridOfCards()}
-            </Grid>
+            <div className="dashboard-body">
+                {isLoading ? <LinearProgress /> : ''}
+                <div className="list-card-holder">{gridOfCards()}</div>
+            </div>
         </div>
     );
 }
