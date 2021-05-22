@@ -5,7 +5,6 @@ The backend is available [here](https://github.com/zBrucyP/OurGroceryList-backen
 
 \
 \
-\
 
 ## Available Scripts
 
