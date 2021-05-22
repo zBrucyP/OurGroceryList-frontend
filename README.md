@@ -3,8 +3,6 @@
 
 The backend is available [here](https://github.com/zBrucyP/OurGroceryList-backend).
 
-\
-\
 
 ## Available Scripts
 
