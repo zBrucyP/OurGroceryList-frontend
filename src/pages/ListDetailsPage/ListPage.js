@@ -61,24 +61,25 @@ export default function ListPage() {
     async function handleSaveButtonClick() {
         setIsLoading(true);
         let result = {
-            addResponse: null,
-            updateResponse: null,
+            addResponse: new Response(),
+            updateResponse: new Response(),
         }
-        if (listItemsToAdd.length>0){
+        if (listItemsToAdd.length > 0){
             result.addResponse = await ListService.addListItems(listItemsToAdd);
             if (result.addResponse.success) {
                 let items = listItems.map(item => {return {...item, isItemToAdd: false}});
                 setListItems(items);
             }
         }
-        if (listItemsToUpdate.length>0) {
+        if (listItemsToUpdate.length > 0) {
             result.updateResponse = await ListService.updateListItems(listItemsToUpdate);
             if (result.updateResponse.success) {
                 let items = listItems.map(item => {return {...item, isItemToUpdate: false}});
                 setListItems(items);
             }
         } 
-        if (!result.addResponse && !result.updateResponse) setErrorMsg('Everything is already saved!');
+        if (result.addResponse.loginExpired || result.updateResponse.loginExpired) user.requestLogout();
+        if (listItemsToAdd.length === 0 && listItemsToUpdate.length === 0) setErrorMsg('Everything is already saved!');
         setIsLoading(false);
     }
 

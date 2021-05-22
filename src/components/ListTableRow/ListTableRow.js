@@ -43,7 +43,7 @@ export default function ListTableRow (props) {
             {props.listItem.quantity != null
             ? <span className="row-attribute-container">
                 <p className="column-label">Quantity:</p>
-                <input className="input-text" name="quantity" type="number" min="0.00" defaultValue={props.listItem.quantity} onChange={(e) => changeSetup(e)}/></span>
+                <input className="input-text" name="quantity" type="number" min="0" step="1" defaultValue={props.listItem.quantity} onChange={(e) => changeSetup(e)}/></span>
             : <span></span>
             }
         </div>
