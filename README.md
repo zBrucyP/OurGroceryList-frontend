@@ -1,7 +1,9 @@
 ### Our Grocery List - Front End
 [Click here to view a live version of the app](https://ourgrocerylist-frontend.herokuapp.com/)
 
-
+/
+/
+/
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
