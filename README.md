@@ -1,5 +1,7 @@
-### Our Grocery List - Front End
+## Our Grocery List - Front End
 [Click here to view a live version of the app](https://ourgrocerylist-frontend.herokuapp.com/)
+
+The backend is available [here](https://github.com/zBrucyP/OurGroceryList-backend).
 
 \
 \
