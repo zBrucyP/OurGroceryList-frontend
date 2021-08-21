@@ -3,7 +3,7 @@
 
 The backend is available [here](https://github.com/zBrucyP/OurGroceryList-backend).
 
-
+<br /><br /><br /><br />
 ## Available Scripts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
